@@ -48,3 +48,7 @@ target_link_libraries(${PROJECT_NAME} glfw)
 find_package(OpenGL REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
+
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
+endif(CMAKE_SYSTEM_NAME MATCHES "Linux")
