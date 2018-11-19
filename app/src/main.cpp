@@ -37,8 +37,8 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-float deltaTime = 0.0f; // 当前帧与上一帧的时间差
-float lastFrame = 0.0f; // 上一帧的时间
+float deltaTime = 0.0f;
+float lastFrame = 0.0f; // Last Frame Time
 
 int main()
 {
@@ -335,7 +335,7 @@ unsigned int configTexture(const char *imagePath, GLenum format)
     unsigned int texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    // 为当前绑定的纹理对象设置环绕、过滤方式
+    // Texture arround
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -363,16 +363,16 @@ unsigned int configVertexData()
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
-        //---- 位置 ----     ---- 颜色 ----     - 纹理坐标 -
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // 右上
-        0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // 右下
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // 左下
-        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,  // 左上
+        //-- Position --  ---- Color ----  - Texture Coordinate -
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // right up
+        0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // right down
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // left down
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,  // left up
 
-        0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // 右上
-        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // 右下
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // 左下
-        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // 左上
+        0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // right up
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // right down
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // left down
+        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // left up
     };
     unsigned int indices[] = {
         // note that we start from 0!
@@ -450,10 +450,7 @@ unsigned int configElementBufferObj(GLsizeiptr size, const void *indices)
 void glmCoordinateTranslation()
 {
     glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-    // 译注：下面就是矩阵初始化的一个例子，如果使用的是0.9.9及以上版本
-    // 下面这行代码就需要改为:
     // glm::mat4 trans = glm::mat4(1.0f)
-    // 之后将不再进行提示
     glm::mat4 trans;
     trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
     // std::cout << trans.to_string() << std::endl;
