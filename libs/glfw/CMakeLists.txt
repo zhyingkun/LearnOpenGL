@@ -117,6 +117,7 @@ endif()
 set(_GLFW_BUILD_DLL 1)
 source_group(src FILES ${glfw_SOURCES})
 source_group(header FILES ${glfw_HEADERS})
+target_compile_definitions(glfw INTERFACE GLFW_DLL)
 add_library(glfw SHARED ${glfw_SOURCES} ${glfw_HEADERS})
 set_target_properties(glfw PROPERTIES
 						OUTPUT_NAME "glfw"
