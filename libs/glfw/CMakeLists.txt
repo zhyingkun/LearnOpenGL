@@ -125,7 +125,7 @@ set_target_properties(glfw PROPERTIES
 						POSITION_INDEPENDENT_CODE ON
 						FOLDER "GLFW3")
 target_compile_definitions(glfw PRIVATE _GLFW_USE_CONFIG_H)
-target_compile_definitions(glfw INTERFACE _GLFW_BUILD_DLL)
+target_compile_definitions(glfw PRIVATE _GLFW_BUILD_DLL)
 target_include_directories(glfw PUBLIC
 							"./include")
 target_include_directories(glfw PRIVATE
