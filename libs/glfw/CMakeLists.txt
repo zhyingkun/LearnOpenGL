@@ -45,8 +45,8 @@ elseif(_GLFW_WIN32)
 	./src/win32_monitor.c ./src/win32_time.c ./src/win32_thread.c ./src/win32_window.c
 	./src/wgl_context.c ./src/egl_context.c ./src/osmesa_context.c)
 elseif(_GLFW_X11)
-	set(glfw_HEADERS ${common_HEADERS} ./src/x11_platform.h xkb_unicode.h posix_time.h
-	./src/posix_thread.h ./src/glx_context.h egl_context.h osmesa_context.h)
+	set(glfw_HEADERS ${common_HEADERS} ./src/x11_platform.h ./src/xkb_unicode.h ./src/posix_time.h
+	./src/posix_thread.h ./src/glx_context.h ./src/egl_context.h ./src/osmesa_context.h)
 	set(glfw_SOURCES ${common_SOURCES} ./src/x11_init.c ./src/x11_monitor.c ./src/x11_window.c
 	./src/xkb_unicode.c ./src/posix_time.c ./src/posix_thread.c ./src/glx_context.c
 	./src/egl_context.c ./src/osmesa_context.c)
