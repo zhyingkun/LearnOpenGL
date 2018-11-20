@@ -1,44 +1,4 @@
-#include <iostream>
-#include <math.h>
-
-#include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "shader.h"
-#include "camera.h"
-#include "stb_image/stb_image.h"
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
-GLFWwindow *glfwComInitAndConfig();
-unsigned int configTexture(const char *imagePath, GLenum format);
-unsigned int configVertexBufferObj(GLsizeiptr size, const void *vertices);
-unsigned int configElementBufferObj(GLsizeiptr size, const void *indices);
-unsigned int configVertexData();
-void glmCoordinateTranslation();
-void displaysMartix(glm::mat4 trans);
-void displaysVec4(glm::vec4 point);
-
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
-
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-// camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
-
-float deltaTime = 0.0f;
-float lastFrame = 0.0f; // Last Frame Time
+#include "main.h"
 
 int main()
 {
@@ -61,14 +21,13 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    Shader ourShader("../../app/shaders/vertexshader.vert",
-                     "../../app/shaders/fragmentshader.frag");
+    Shader ourShader(pVertexShaderPath, pFragmentShaderPath);
 
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
 
     //firefox-icon.png container.jpg
-    unsigned int texture1 = configTexture("../../app/textures/container.jpg", GL_RGB);
-    unsigned int texture2 = configTexture("../../app/textures/awesomeface.png", GL_RGBA);
+    unsigned int texture1 = configTexture(pContainerJpgPath, GL_RGB);
+    unsigned int texture2 = configTexture(pAwesomefacePngPath, GL_RGBA);
 
     // Config Vertex Data
     unsigned int VAO = configVertexData();
