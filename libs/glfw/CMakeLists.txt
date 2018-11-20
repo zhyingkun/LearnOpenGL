@@ -89,10 +89,11 @@ if (_GLFW_X11)
 	if (NOT X11_Xcursor_FOUND)
 		message(FATAL_ERROR "The Xcursor headers were not found")
 	endif()
-	list(APPEND glfw_INCLUDE_DIRS "${X11_Xrandr_INCLUDE_PATH}"
-									"${X11_Xinerama_INCLUDE_PATH}"
-									"${X11_Xkb_INCLUDE_PATH}"
-									"${X11_Xcursor_INCLUDE_PATH}")
+	list(APPEND glfw_INCLUDE_DIRS
+		"${X11_Xrandr_INCLUDE_PATH}"
+		"${X11_Xinerama_INCLUDE_PATH}"
+		"${X11_Xkb_INCLUDE_PATH}"
+		"${X11_Xcursor_INCLUDE_PATH}")
 endif()
 
 #--------------------------------------------------------------------
@@ -119,17 +120,16 @@ source_group(src FILES ${glfw_SOURCES})
 source_group(header FILES ${glfw_HEADERS})
 add_library(glfw SHARED ${glfw_SOURCES} ${glfw_HEADERS})
 set_target_properties(glfw PROPERTIES
-						OUTPUT_NAME "glfw"
-						VERSION "3.3"
-						SOVERSION "3"
-						POSITION_INDEPENDENT_CODE ON
-						FOLDER "GLFW3")
+	OUTPUT_NAME "glfw"
+	VERSION "3.3"
+	SOVERSION "3"
+	POSITION_INDEPENDENT_CODE ON
+	FOLDER "GLFW3")
 target_compile_definitions(glfw PRIVATE _GLFW_USE_CONFIG_H)
 target_compile_definitions(glfw PRIVATE _GLFW_BUILD_DLL)
-target_include_directories(glfw PUBLIC
-							"./include")
+target_include_directories(glfw PUBLIC "./include")
 target_include_directories(glfw PRIVATE
-							"./src"
-							${GLFW_CONFIG_DIR}
-							${glfw_INCLUDE_DIRS})
+	"./src"
+	${GLFW_CONFIG_DIR}
+	${glfw_INCLUDE_DIRS})
 target_link_libraries(glfw PRIVATE ${glfw_LIBRARIES})

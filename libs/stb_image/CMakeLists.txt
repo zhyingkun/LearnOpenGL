@@ -1,0 +1,8 @@
+# cmake_minimum_required(VERSION 3.0)
+# project(libs)
+aux_source_directory(./src STB_IMAGE_SRC)
+set(STB_IMAGE_HEADER
+	./include/stb_image.h)
+source_group(src FILES ${STB_IMAGE_SRC})
+source_group(header FILES ${STB_IMAGE_HEADER})
+add_library(stb_image SHARED ${STB_IMAGE_SRC} ${STB_IMAGE_HEADER})
