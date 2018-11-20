@@ -1,5 +1,6 @@
 # cmake_minimum_required(VERSION 3.0)
 # project(libs)
+include_directories(./include)
 aux_source_directory(./src GLAD_SRC)
 set(GLAD_HEADER
 	./include/glad/glad.h

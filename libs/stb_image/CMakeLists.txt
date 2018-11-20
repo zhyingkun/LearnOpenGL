@@ -1,5 +1,6 @@
 # cmake_minimum_required(VERSION 3.0)
 # project(libs)
+include_directories(./include)
 aux_source_directory(./src STB_IMAGE_SRC)
 set(STB_IMAGE_HEADER
 	./include/stb_image.h)
