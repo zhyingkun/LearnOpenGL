@@ -7,3 +7,4 @@ set(GLAD_HEADER
 source_group(src FILES ${GLAD_SRC})
 source_group(header FILES ${GLAD_HEADER})
 add_library(glad SHARED ${GLAD_SRC} ${GLAD_HEADER})
+# add_library(glad STATIC ${GLAD_SRC} ${GLAD_HEADER})

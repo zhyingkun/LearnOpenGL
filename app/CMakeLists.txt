@@ -1,5 +1,11 @@
 # cmake_minimum_required(VERSION 3.0)
 # project(app)
+include_directories(../libs/glfw/include)
+include_directories(../libs/glm/include)
+include_directories(../libs/glad/include)
+include_directories(../libs/stb_image/include)
+include_directories(./common/include)
+
 add_subdirectory(./base)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

@@ -119,6 +119,7 @@ set(_GLFW_BUILD_DLL 1)
 source_group(src FILES ${glfw_SOURCES})
 source_group(header FILES ${glfw_HEADERS})
 add_library(glfw SHARED ${glfw_SOURCES} ${glfw_HEADERS})
+# add_library(glfw STATIC ${glfw_SOURCES} ${glfw_HEADERS})
 set_target_properties(glfw PROPERTIES
 	OUTPUT_NAME "glfw"
 	VERSION "3.3"

@@ -6,3 +6,4 @@ set(STB_IMAGE_HEADER
 source_group(src FILES ${STB_IMAGE_SRC})
 source_group(header FILES ${STB_IMAGE_HEADER})
 add_library(stb_image SHARED ${STB_IMAGE_SRC} ${STB_IMAGE_HEADER})
+# add_library(stb_image STATIC ${STB_IMAGE_SRC} ${STB_IMAGE_HEADER})
