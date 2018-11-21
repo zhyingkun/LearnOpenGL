@@ -2,6 +2,7 @@
 
 int main()
 {
+    printf("zykTest\n");
     // Init glfw window
     GLFWwindow *window = glfwComInitAndConfig();
 
