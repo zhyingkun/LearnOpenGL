@@ -1,5 +1,9 @@
-# cmake_minimum_required(VERSION 3.0)
-# project(base)
+cmake_minimum_required(VERSION 3.0)
+project(base
+	VERSION 0.1.0.0
+	DESCRIPTION "OpenGL base app"
+	HOMEPAGE_URL "www.zhyingkun.com"
+	LANGUAGES C CXX)
 aux_source_directory(./src MAIN_SRC)
 aux_source_directory(../common/src COMMON_SRC)
 file(GLOB HEADER "./src/*.h")
@@ -10,7 +14,7 @@ file(GLOB SHADER_FILES "./shaders/*")
 file(GLOB TEXTURE_FILES "./textures/*")
 source_group(shaders FILES ${SHADER_FILES})
 source_group(textures FILES ${TEXTURE_FILES})
-add_executable(base
+add_executable(${PROJECT_NAME}
 	${MAIN_SRC}
 	${COMMON_SRC}
 	${HEADER}
@@ -18,15 +22,15 @@ add_executable(base
 	${SHADER_FILES}
 	${TEXTURE_FILES})
 set(BASE_RESOURCE ${SHADER_FILES} ${TEXTURE_FILES})
-set_target_properties(base PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
 	MACOSX_BUNDLE TRUE
-	RESOURCE "${BASE_RESOURCE}")
-target_link_libraries(base glfw glad stb_image)
+	RESOURCE "${BASE_RESOURCE}")# Here must has "", if not, will failed in cmake 3.13.1
+target_link_libraries(${PROJECT_NAME} glfw glad stb_image)
 
 find_package(OpenGL REQUIRED)
-target_include_directories(base PUBLIC ${OPENGL_INCLUDE_DIR})
-target_link_libraries(base ${OPENGL_gl_LIBRARY})
+target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	target_link_libraries(base ${CMAKE_DL_LIBS})
+	target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 endif(CMAKE_SYSTEM_NAME MATCHES "Linux")
