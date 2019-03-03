@@ -13,8 +13,9 @@ void main()
 {
 //    FragColor = vertexColor;
     // FragColor = texture(ourTexture, TexCoord);
+	FragColor = texture(texture2, vec2(1.0 - TexCoord.x, TexCoord.y));
     // FragColor = texture(ourTexture, TexCoord) * vertexColor;
     // FragColor = mix(texture(ourTexture, TexCoord), texture(texture2, TexCoord), 0.2);
     //vec2(1.0 - TexCoord.x, TexCoord.y)
-    FragColor = mix(texture(ourTexture, TexCoord), texture(texture2, vec2(1.0 - TexCoord.x, TexCoord.y)), 0.2);
+    // FragColor = mix(texture(ourTexture, TexCoord), texture(texture2, vec2(1.0 - TexCoord.x, TexCoord.y)), 0.2);
 }

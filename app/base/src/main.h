@@ -23,6 +23,10 @@ const char *pVertexShaderPath   = "../Resources/vertexshader.vert";
 const char *pFragmentShaderPath = "../Resources/fragmentshader.frag";
 const char *pContainerJpgPath   = "../Resources/container.jpg";
 const char *pAwesomefacePngPath = "../Resources/awesomeface.png";
+// const char *pVertexShaderPath   = "../../../app/base/shaders/vertexshader.vert";
+// const char *pFragmentShaderPath = "../../../app/base/shaders/fragmentshader.frag";
+// const char *pContainerJpgPath   = "../../../app/base/textures/container.jpg";
+// const char *pAwesomefacePngPath = "../../../app/base/textures/awesomeface.png";
 #elif __linux__
 // For VSCode
 const char *pVertexShaderPath   = "../../../app/base/shaders/vertexshader.vert";

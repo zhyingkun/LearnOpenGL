@@ -64,14 +64,14 @@ int main()
 
 	// render loop
 	// -----------
-	//  int RenderIndex = 1;
+	 int RenderIndex = 1;
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = glfwGetTime();
-		// if (currentFrame >= 2.0 && currentFrame <= 3.0)
-		// {
-		// 	std::cout << "zykTest: RenderLoop " << RenderIndex++ << std::endl;
-		// }
+		if (currentFrame >= 2.0 && currentFrame <= 3.0)
+		{
+			std::cout << "zykTest: RenderLoop " << RenderIndex++ << std::endl;
+		}
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -315,6 +315,15 @@ unsigned int configTexture(const char *imagePath, GLenum format)
 		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
+		// std::cout<<std::endl<<std::endl;
+		// std::cout<<"zykTest Image Path:"<<imagePath<<std::endl<<"Image Data:";//<<data<<std::endl;
+		// for(int i=0; i<width*height*nrChannels; i++){
+		// 	if(i%nrChannels == 0){
+		// 		std::cout<<std::endl;
+		// 	}
+		// 	std::cout<<int(data[i])<<" ";
+		// }
+		// std::cout<<std::endl<<std::endl;
 	}
 	else
 	{
@@ -337,10 +346,16 @@ unsigned int configVertexData()
 		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // left down
 		-0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,  // left up
 
-		0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // right up
-		0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // right down
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // left down
-		-0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // left up
+		0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   // right up
+		0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // right down
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, // left down
+		-0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,   // left up
+
+		0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,   // right up
+		-0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   // left up
+
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // left down
+		0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f  // right down
 	};
 	unsigned int indices[] = {
 		// note that we start from 0!
@@ -356,11 +371,11 @@ unsigned int configVertexData()
 		4, 5, 6,
 		4, 6, 7,
 
-		0, 3, 7,
-		0, 7, 4,
+		0, 3, 9,
+		0, 9, 8,
 
-		1, 2, 5,
-		2, 5, 6
+		1, 2, 11,
+		2, 11, 10
 		// 0, 1, 2
 	};
 
