@@ -69,6 +69,10 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);
+	// glBindAttribLocation(ID, 0, "aPos"); // same as 'layout' keyword in vertex shader program
+	// glBindAttribLocation(ID, 1, "aColor");
+	// glBindAttribLocation(ID, 2, "aTexCoord");
+	// glGetAttribLocation
 	glLinkProgram(ID);
 	checkCompileErrors(ID, "PROGRAM");
 	// delete the shaders as they're linked into our program now and no longer necessary
