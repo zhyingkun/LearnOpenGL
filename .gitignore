@@ -3,3 +3,11 @@ build/
 buildXcode/
 buildVS/
 .vscode/
+
+# For Unity
+Library/
+obj/
+Temp/
+UnityPackageManager/
+Assembly-CSharp.csproj
+SimulateOpenGL.sln
