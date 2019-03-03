@@ -6,7 +6,11 @@ include_directories(../libs/glad/include)
 include_directories(../libs/stb_image/include)
 include_directories(./common/include)
 
+add_subdirectory(./glfw-win)
 add_subdirectory(./base)
+add_subdirectory(./template)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(TARGET glfw-win PROPERTY FOLDER "app")
 set_property(TARGET base PROPERTY FOLDER "app")
+set_property(TARGET template PROPERTY FOLDER "app")
