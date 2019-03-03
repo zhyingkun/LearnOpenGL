@@ -57,18 +57,18 @@ public class BaseBehaviour : MonoBehaviour
 		// };
 		myBox.triangles = new int[]{
 			// note that we start from 0!
-			0, 1, 3, // first triangle
-			1, 2, 3, // second triangle
-			0, 4, 5,
-			0, 5, 1,
-			2, 6, 3,
-			6, 7, 3,
-			5, 4, 6,
-			6, 4, 7,
-			0, 3, 9, // 8==>4  9==>7 10==>6 11==>5
-			0, 9, 8,
-			2, 1, 11,
-			2, 11, 10
+			1, 0, 3, // first triangle
+			2, 1, 3, // second triangle
+			4, 0, 5,
+			5, 0, 1,
+			6, 2, 3,
+			7, 6, 3,
+			4, 5, 6,
+			4, 6, 7,
+			3, 0, 9, // 8==>4  9==>7 10==>6 11==>5
+			9, 0, 8,
+			1, 2, 11,
+			11,2, 10
 			// 0, 1, 2
 		};
 		MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
