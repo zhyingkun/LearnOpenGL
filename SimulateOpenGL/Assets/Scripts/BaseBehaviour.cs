@@ -75,20 +75,29 @@ public class BaseBehaviour : MonoBehaviour
 		meshFilter.sharedMesh = myBox;
 		// Mesh Box = meshFilter.sharedMesh;
 		// Vector3[] vects = Box.vertices;
+		// string vertexStr = "";
 		// for (int i = 0; i < vects.Length; i++)
 		// {
-		// 	Debug.Log(vects[i]);
+		// 	// Debug.Log(vects[i]);
+		// 	vertexStr += vects[i] + " ";
 		// }
 		// Vector2[] uv = Box.uv;
+		// string uvStr = "";
 		// for (int i = 0; i < uv.Length; i++)
 		// {
-		// 	Debug.Log(uv[i]);
+		// 	// Debug.Log(uv[i]);
+		// 	uvStr += uv[i] + " ";
 		// }
 		// int[] index = Box.triangles;
+		// string indexStr = "";
 		// for (int i = 0; i < index.Length; i++)
 		// {
-		// 	Debug.Log(index[i]);
+		// 	// Debug.Log(index[i]);
+		// 	indexStr += index[i].ToString() + " ";
 		// }
+		// Debug.Log(vertexStr);
+		// Debug.Log(uvStr);
+		// Debug.Log(indexStr);
 	}
 	// Use this for initialization
 	void Start()
