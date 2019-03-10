@@ -1,10 +1,10 @@
-#GLFW
+#GLFW库
 
-source code copy from https://github.com/glfw/glfw.git
+源码全部来自[https://github.com/glfw/glfw.git]
 
-#Directories
+#文件夹说明
 
-1. src : glfw source code, remove some .in files
-2. include : glfw public .h headers
-3. config : for Cross-platform, only support Win/Mac/Linux for easy
-4. all CMakeLists.txt : create myself for make the dynamic library
+1. src : glfw 源码，删掉了一些 .in 文件
+2. include : glfw 公共头文件
+3. config : 跨平台配置，为了简单，只支持Mac/Linux/Win三个平台
+4. 所有的CMakeLists.txt : 用于管理整个动态库工程

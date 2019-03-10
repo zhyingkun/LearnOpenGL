@@ -1,20 +1,41 @@
 cmake_minimum_required(VERSION 3.0)
-project(glfw)
+project(glfw
+	VERSION 3.3
+	LANGUAGES C CXX)
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+	set(CMAKE_BUILD_TYPE "Debug")
+endif()
+message(STATUS "CMakeLists.txt for ${PROJECT_NAME}")
+message(STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+
+if(APPLE)
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+elseif(WIN32)
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+endif()
+
 if(APPLE)
 	set(_GLFW_COCOA 1)
 	set(GLFW_CONFIG_DIR "./config/mac")
 	set(GLFW_CONFIG_H "./config/mac/glfw_config.h")
-endif(APPLE)
-if(WIN32)
-	set(_GLFW_WIN32 1)
-	set(GLFW_CONFIG_DIR "./config/windows")
-	set(GLFW_CONFIG_H "./config/windows/glfw_config.h")
-endif(WIN32)
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set(_GLFW_X11 1)
 	set(GLFW_CONFIG_DIR "./config/linux")
 	set(GLFW_CONFIG_H "./config/linux/glfw_config.h")
-endif(CMAKE_SYSTEM_NAME MATCHES "Linux")
+elseif(WIN32)
+	set(_GLFW_WIN32 1)
+	set(GLFW_CONFIG_DIR "./config/windows")
+	set(GLFW_CONFIG_H "./config/windows/glfw_config.h")
+endif()
 
 set(common_HEADERS
 	${GLFW_CONFIG_H}
@@ -118,19 +139,19 @@ endif()
 set(_GLFW_BUILD_DLL 1)
 source_group(src FILES ${glfw_SOURCES})
 source_group(header FILES ${glfw_HEADERS})
-add_library(glfw SHARED ${glfw_SOURCES} ${glfw_HEADERS})
-# add_library(glfw STATIC ${glfw_SOURCES} ${glfw_HEADERS})
-set_target_properties(glfw PROPERTIES
-	OUTPUT_NAME "glfw"
+add_library(${PROJECT_NAME} SHARED ${glfw_SOURCES} ${glfw_HEADERS})
+# add_library(${PROJECT_NAME} STATIC ${glfw_SOURCES} ${glfw_HEADERS})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	OUTPUT_NAME "${PROJECT_NAME}"
 	VERSION "3.3"
 	SOVERSION "3"
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "GLFW3")
-target_compile_definitions(glfw PRIVATE _GLFW_USE_CONFIG_H)
-target_compile_definitions(glfw PRIVATE _GLFW_BUILD_DLL)
-target_include_directories(glfw PUBLIC "./include")
-target_include_directories(glfw PRIVATE
+target_compile_definitions(${PROJECT_NAME} PRIVATE _GLFW_USE_CONFIG_H)
+target_compile_definitions(${PROJECT_NAME} PRIVATE _GLFW_BUILD_DLL)
+target_include_directories(${PROJECT_NAME} PUBLIC "./include")
+target_include_directories(${PROJECT_NAME} PRIVATE
 	"./src"
 	${GLFW_CONFIG_DIR}
 	${glfw_INCLUDE_DIRS})
-target_link_libraries(glfw PRIVATE ${glfw_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${glfw_LIBRARIES})
