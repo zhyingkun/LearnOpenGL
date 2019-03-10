@@ -26,7 +26,9 @@ cmake -G "Xcode" ..
 ```bash
 cd LearnOpenGL
 mkdir build && cd build
-cmake ..
+cmake .. # default is Debug
+# for Debug: cmake -DCMAKE_BUILD_TYPE=Debug ..
+# for Release: cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 make命令会自动编译好可执行文件
