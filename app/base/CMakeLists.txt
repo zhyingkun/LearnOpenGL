@@ -1,19 +1,43 @@
 cmake_minimum_required(VERSION 3.0)
 project(base
 	VERSION 0.1.0.0
-	DESCRIPTION "OpenGL base app"
-	HOMEPAGE_URL "www.zhyingkun.com"
+	# DESCRIPTION "OpenGL base app"
+	# HOMEPAGE_URL "www.zhyingkun.com"
 	LANGUAGES C CXX)
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+	set(CMAKE_BUILD_TYPE "Debug")
+endif()
+message(STATUS "CMakeLists.txt for ${PROJECT_NAME}")
+message(STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+
+if(APPLE)
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall -Wextra")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+elseif(WIN32)
+	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall")
+	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+endif()
+
 aux_source_directory(./src MAIN_SRC)
 aux_source_directory(../common/src COMMON_SRC)
 file(GLOB HEADER "./src/*.h")
 file(GLOB COMMON_HEADER "../common/include/*.h")
+
 source_group(src FILES ${MAIN_SRC} ${HEADER})
 source_group(common FILES ${COMMON_SRC} ${COMMON_HEADER})
+
 file(GLOB SHADER_FILES "./shaders/*")
 file(GLOB TEXTURE_FILES "./textures/*")
 source_group(shaders FILES ${SHADER_FILES})
 source_group(textures FILES ${TEXTURE_FILES})
+
 add_executable(${PROJECT_NAME}
 	${MAIN_SRC}
 	${COMMON_SRC}

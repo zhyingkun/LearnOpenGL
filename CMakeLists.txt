@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
-project(LearnOpenGL)
-set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+project(LearnOpenGL
+	VERSION 1.0.0
+	LANGUAGES C CXX)
 
-if(APPLE)
-	add_compile_options(-g -Wall -Wextra)
-endif(APPLE)
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	add_compile_options(-g -Wall -Wextra)
-endif(CMAKE_SYSTEM_NAME MATCHES "Linux")
-if(WIN32)
-	add_compile_options(-Wall)
-endif(WIN32)
+message(STATUS "CMakeLists.txt for ${PROJECT_NAME}")
+message(STATUS "Current OS is ${CMAKE_SYSTEM}")
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 add_subdirectory(./libs)
 add_subdirectory(./app)

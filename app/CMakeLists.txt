@@ -1,5 +1,6 @@
-# cmake_minimum_required(VERSION 3.0)
-# project(app)
+cmake_minimum_required(VERSION 3.0)
+project(app)
+
 include_directories(../libs/glfw/include)
 include_directories(../libs/glm/include)
 include_directories(../libs/glad/include)
