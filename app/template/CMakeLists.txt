@@ -24,7 +24,10 @@ elseif(WIN32)
 endif()
 
 aux_source_directory(./src MAIN_SRC)
+source_group(src FILES ${MAIN_SRC})
 add_executable(${PROJECT_NAME} ${MAIN_SRC})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	MACOSX_BUNDLE TRUE)
 
 target_link_libraries(${PROJECT_NAME} glfw glad)
 

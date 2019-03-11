@@ -1,13 +1,17 @@
 #include <iostream>
+
+using namespace std;
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 void glfwErrorHandler(int code, const char *desc)
 {
-	std::cout << "zykTest glfw Error, code:" << code << " description:" << desc << std::endl;
+	cout << "zykTest glfw Error, code:" << code << " description:" << desc << endl;
 }
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+void handleFramebufferSizeCallback(GLFWwindow *window, int width, int height)
 {
+	(void)window;
 	glViewport(0, 0, width, height);
 }
 void processInput(GLFWwindow *window)
@@ -20,6 +24,7 @@ void processInput(GLFWwindow *window)
 
 int main(int argc, char *argv[])
 {
+	(void)argc; (void)argv;
 	glfwSetErrorCallback(glfwErrorHandler);
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -37,7 +42,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(window, handleFramebufferSizeCallback);
 	glfwSwapInterval(1);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
