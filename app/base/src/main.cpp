@@ -77,6 +77,7 @@ void processInput(GLFWwindow *window)
 // ---------------------------------------------------------------------------------------------
 void handleFramebufferSizeCallback(GLFWwindow *window, int width, int height)
 {
+	(void)window;
 	// make sure the viewport matches the new window dimensions; note that width and
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
@@ -85,6 +86,7 @@ void handleFramebufferSizeCallback(GLFWwindow *window, int width, int height)
 // -------------------------------------------------------
 void handleCursorPosCallback(GLFWwindow *window, double xpos, double ypos)
 {
+	(void)window;
 	if (firstMouse)
 	{
 		lastX = xpos;
@@ -101,6 +103,7 @@ void handleCursorPosCallback(GLFWwindow *window, double xpos, double ypos)
 // ----------------------------------------------------------------------
 void handleScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 {
+	(void)window;
 	camera.ProcessMouseScroll(yoffset);
 }
 void handleMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
