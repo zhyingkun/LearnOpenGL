@@ -1,21 +1,21 @@
 #include <shader.h>
 
-Shader::Shader(const char *vertexPath, const char *fragmentPath)
+Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
 {
 	// 1. retrieve the vertex/fragment source code from filePath
-	std::string vertexCode;
-	std::string fragmentCode;
-	std::ifstream vShaderFile;
-	std::ifstream fShaderFile;
+	string vertexCode;
+	string fragmentCode;
+	ifstream vShaderFile;
+	ifstream fShaderFile;
 	// ensure ifstream objects can throw exceptions:
-	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
+	fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
 	try
 	{
 		// open files
 		vShaderFile.open(vertexPath);
 		fShaderFile.open(fragmentPath);
-		std::stringstream vShaderStream, fShaderStream;
+		stringstream vShaderStream, fShaderStream;
 		// read file's buffer contents into streams
 		vShaderStream << vShaderFile.rdbuf();
 		fShaderStream << fShaderFile.rdbuf();
@@ -26,102 +26,99 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
 		vertexCode = vShaderStream.str();
 		fragmentCode = fShaderStream.str();
 	}
-	catch (std::ifstream::failure e)
+	catch (ifstream::failure e)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		cout << "zykTest Error: Shader files read error!" << endl;
 		exit(-1);
 	}
-	const char *vShaderCode = vertexCode.c_str();
-	const char *fShaderCode = fragmentCode.c_str();
+	const GLchar *vShaderCode = vertexCode.c_str();
+	const GLchar *fShaderCode = fragmentCode.c_str();
 	// 2. compile shaders
-	unsigned int vertex, fragment;
+
 	// int success;
 	// char infoLog[512];
 	// vertex shader
-	vertex = glCreateShader(GL_VERTEX_SHADER);
+	GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 	if (vertex == 0)
 	{
-		std::cout << "Create Shader Error!" << std::endl;
+		cout << "Create Shader Error!" << endl;
 		exit(-1);
 	}
-	else
-	{
-		std::cout << "vertex shader reference: " << vertex << std::endl;
-		std::cout << "glIsShader(vertexShader): " << (int)glIsShader(vertex) << std::endl;
-		std::cout << "glIsShader(GL_VERTEX_SHADER): " << (int)glIsShader(GL_VERTEX_SHADER) << std::endl;
-	}
+	cout << "vertex shader reference: " << vertex << endl;
+	cout << "glIsShader(vertexShader): " << (int)glIsShader(vertex) << endl;
+	cout << "glIsShader(GL_VERTEX_SHADER): " << (int)glIsShader(GL_VERTEX_SHADER) << endl;
 	glShaderSource(vertex, 1, &vShaderCode, NULL);
 	glCompileShader(vertex);
 	int success = 0;
 	glGetShaderiv(vertex, GL_DELETE_STATUS, &success);
-	std::cout << "GL_DELETE_STATUS: " << success << std::endl;
+	cout << "GL_DELETE_STATUS: " << success << endl;
 	glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &success);
-	std::cout << "INFO_LOG_LENGTH: " << success << std::endl;
+	cout << "INFO_LOG_LENGTH: " << success << endl;
 	glGetShaderiv(vertex, GL_SHADER_SOURCE_LENGTH, &success);
-	std::cout << "SHADER_SOURCE_LENGTH: " << success << std::endl;
+	cout << "SHADER_SOURCE_LENGTH: " << success << endl;
 	checkCompileErrors(vertex, "VERTEX");
 	// fragment Shader
-	fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &fShaderCode, NULL);
 	glCompileShader(fragment);
 	checkCompileErrors(fragment, "FRAGMENT");
 	// shader Program
-	ID = glCreateProgram();
-	glAttachShader(ID, vertex);
-	glAttachShader(ID, fragment);
-	// glBindAttribLocation(ID, 0, "aPos"); // same as 'layout' keyword in vertex shader program
-	// glBindAttribLocation(ID, 1, "aColor");
-	// glBindAttribLocation(ID, 2, "aTexCoord");
+	this->ID = glCreateProgram();
+	glAttachShader(this->ID, vertex);
+	glAttachShader(this->ID, fragment);
+	// glBindAttribLocation(this->ID, 0, "aPos"); // same as 'layout' keyword in vertex shader program
+	// glBindAttribLocation(this->ID, 1, "aColor");
+	// glBindAttribLocation(this->ID, 2, "aTexCoord");
 	// glGetAttribLocation
-	glLinkProgram(ID);
-	checkCompileErrors(ID, "PROGRAM");
+	glLinkProgram(this->ID);
+	checkCompileErrors(this->ID, "PROGRAM");
 	// delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 	glGetShaderiv(vertex, GL_DELETE_STATUS, &success);
-	std::cout << "after call glDeleteShader, GL_DELETE_STATUS: " << success << std::endl;
+	cout << "after call glDeleteShader, GL_DELETE_STATUS: " << success << endl;
 }
 // activate the shader
 // ------------------------------------------------------------------------
 void Shader::use()
 {
-	glUseProgram(ID);
+	glUseProgram(this->ID);
 }
 // utility uniform functions
 // ------------------------------------------------------------------------
-void Shader::setBool(const std::string &name, bool value) const
+void Shader::setBool(const string &name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(this->ID, name.c_str()), (int)value);
 }
 // ------------------------------------------------------------------------
-void Shader::setInt(const std::string &name, int value) const
+void Shader::setInt(const string &name, int value) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	glUniform1i(glGetUniformLocation(this->ID, name.c_str()), value);
 }
 // ------------------------------------------------------------------------
-void Shader::setFloat(const std::string &name, float value) const
+void Shader::setFloat(const string &name, float value) const
 {
-	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+	glUniform1f(glGetUniformLocation(this->ID, name.c_str()), value);
 }
 // ------------------------------------------------------------------------
-void Shader::set4Float(const std::string &name, float value1, float value2, float value3, float value4) const
+void Shader::set4Float(const string &name, float value1, float value2, float value3, float value4) const
 {
-	glUniform4f(glGetUniformLocation(ID, name.c_str()), value1, value2, value3, value4);
+	glUniform4f(glGetUniformLocation(this->ID, name.c_str()), value1, value2, value3, value4);
 }
 // ------------------------------------------------------------------------
-void Shader::setMat4fv(const std::string &name, glm::mat4 value) const
+void Shader::setMat4fv(const string &name, glm::mat4 value) const
 {
-	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+	glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }
 // ------------------------------------------------------------------------
-void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
+void Shader::setMat4(const string &name, const glm::mat4 &mat) const
 {
-	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
 // utility function for checking shader compilation/linking errors.
 // ------------------------------------------------------------------------
-void Shader::checkCompileErrors(unsigned int shader, std::string type)
+void Shader::checkCompileErrors(unsigned int shader, string type)
 {
 	int success;
 	char infoLog[1024];
@@ -131,8 +128,8 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type)
 		if (!success)
 		{
 			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n"
-					  << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			cout << "zykTest: Shader compile with error of type: " << type << "\n"
+					  << infoLog << "\n -- --------------------------------------------------- -- " << endl;
 			exit(-2);
 		}
 	}
@@ -142,8 +139,8 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type)
 		if (!success)
 		{
 			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n"
-					  << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			cout << "zykTest: Shader compile with error of type: " << type << "\n"
+					  << infoLog << "\n -- --------------------------------------------------- -- " << endl;
 			exit(-2);
 		}
 	}
