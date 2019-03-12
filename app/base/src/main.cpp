@@ -103,7 +103,7 @@ void handleCursorPosCallback(GLFWwindow *window, double xpos, double ypos)
 // ----------------------------------------------------------------------
 void handleScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 {
-	(void)window;
+	(void)window; (void)xoffset;
 	camera.ProcessMouseScroll(yoffset);
 }
 void handleMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
@@ -168,6 +168,16 @@ GLFWwindow* initAndConfigGLFW()
 	return window;
 }
 
+GLuint configVertexBufferObj(GLsizeiptr size, const GLvoid *vertices)
+{
+	GLuint VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	return VBO;
+}
+
 unsigned int configTexture(const char *imagePath, GLenum format)
 {
 	unsigned int texture;
@@ -205,16 +215,6 @@ unsigned int configTexture(const char *imagePath, GLenum format)
 	return texture;
 }
 
-unsigned int configVertexBufferObj(GLsizeiptr size, const void *vertices)
-{
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	return VBO;
-}
-
 unsigned int configElementBufferObj(GLsizeiptr size, const void *indices)
 {
 	unsigned int EBO;
@@ -229,93 +229,126 @@ unsigned int configVertexData()
 {
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	float vertices[] = {
-		//-- Position --  ---- Color ----  - Texture Coordinate -
-		0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // right up
-		0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // right down
-		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // left down
-		-0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,  // left up
-
-		0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   // right up
-		0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // right down
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, // left down
-		-0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,   // left up
-
-		0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,   // right up
-		-0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   // left up
-
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // left down
-		0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f  // right down
+	GLfloat vertices[] = {
+		-0.5f, -0.5f,  0.5f, // In OpenGL: front
+		 0.5f, -0.5f,  0.5f, // In Unity : back
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f, // In OpenGL: back
+		 0.5f,  0.5f, -0.5f, // In Unity : front
+		 0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f, // left
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f, // right
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f, // up
+		 0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f, // down
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
 	};
-	unsigned int indices[] = {
-		// note that we start from 0!
-		0, 1, 3, // first triangle
-		1, 2, 3, // second triangle
-
-		0, 4, 5,
-		0, 5, 1,
-
-		2, 6, 3,
-		6, 7, 3,
-
-		4, 5, 6,
-		4, 6, 7,
-
-		0, 3, 9,
-		0, 9, 8,
-
-		1, 2, 11,
-		2, 11, 10
-		// 0, 1, 2
+	GLfloat texColor[] = {
+		1.0f, 0.0f, 0.0f, // first
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, // second
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, // third
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, // fourth
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, // fifth
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, // sixth
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+	};
+	GLfloat texCoord[] = {
+		0.0f, 0.0f, // In OpenGL: front
+		1.0f, 0.0f, // In Unity : back
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, // In OpenGL: back
+		1.0f, 0.0f, // In Unity : front
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, // left
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, // right
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, // up
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, // down
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+	};
+	GLuint indices[] = {
+		 0,  1,  2,  0,  2,  3, // In OpenGL: front, In Unity: back
+		 4,  5,  6,  4,  6,  7, // In OpenGL: back, In Unity: front
+		 8,  9, 10,  8, 10, 11, // left
+		12, 13, 14, 12, 14, 15, // right
+		16, 17, 18, 16, 18, 19, // up
+		20, 21, 22, 20, 22, 23, // down
 	};
 
-	unsigned int VBO, VAO, EBO;
-	VBO = configVertexBufferObj(sizeof(vertices), vertices);
+	GLuint vertexVBO, colorVBO, texCoordVBO, VAO, EBO;
+	vertexVBO = configVertexBufferObj(sizeof(vertices), vertices);
+	colorVBO = configVertexBufferObj(sizeof(texColor), texColor);
+	texCoordVBO = configVertexBufferObj(sizeof(texCoord), texCoord);
 	EBO = configElementBufferObj(sizeof(indices), indices);
 
 	glGenVertexArrays(1, &VAO);
-
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-	// glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-	// glEnableVertexAttribArray(0);
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	// ShaderLocation, PerVertexSize, Type, Normalize, Stride, Offset
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+	glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+	// texture coordinates
+	glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(2);
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
+	// Unbind EBO Must after unbind the VAO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	return VAO;
-}
-
-void displaysMartix(glm::mat4 trans)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-			cout << (float)trans[j][i] << " ";
-		cout << endl;
-	}
-	cout << endl;
-}
-
-void displaysVec4(glm::vec4 point)
-{
-	for (int i = 0; i < 4; i++)
-		cout << point[i] << " ";
-	cout << endl;
 }
 
 int main(int argc, char* argv[])
@@ -333,7 +366,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	
-	int nrAttributes;
+	GLint nrAttributes;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
 	cout << "Maximum nr of vertex attributes supported: " << nrAttributes << endl;
 	
@@ -342,13 +375,12 @@ int main(int argc, char* argv[])
 	Shader ourShader(pVertexShaderPath, pFragmentShaderPath);
 	
 	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	
 	//firefox-icon.png container.jpg
-	unsigned int texture1 = configTexture(pContainerJpgPath, GL_RGB);
-	unsigned int texture2 = configTexture(pAwesomefacePngPath, GL_RGBA);
+	GLuint texture1 = configTexture(pContainerJpgPath, GL_RGB);
+	GLuint texture2 = configTexture(pAwesomefacePngPath, GL_RGBA);
 	
 	// Config Vertex Data
-	unsigned int VAO = configVertexData();
+	GLuint VAO = configVertexData();
 	
 	// uncomment this call to draw in wireframe polygons.
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -375,10 +407,12 @@ int main(int argc, char* argv[])
 		glm::vec3(1.3f, -2.0f, -2.5f),
 		glm::vec3(1.5f, 2.0f, -2.5f),
 		glm::vec3(1.5f, 0.2f, -1.5f),
-		glm::vec3(-1.3f, 1.0f, -1.5f)};
+		glm::vec3(-1.3f, 1.0f, -1.5f),
+	};
 	
 	glfwSwapInterval(1);
-	
+	glEnable(GL_DEPTH_TEST);
+
 	// render loop
 	// -----------
 	int RenderIndex = 1;
@@ -396,9 +430,7 @@ int main(int argc, char* argv[])
 		processInput(window);
 		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //background color
-		glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
 		// bind textures on corresponding texture units
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);

@@ -12,64 +12,64 @@ public class BaseBehaviour : MonoBehaviour
 		Mesh myBox = new Mesh();
 		myBox.name = "MyBox";
 		myBox.vertices = new Vector3[]{
-			new Vector3(0.5f, 0.5f, 0.5f),
-			new Vector3(0.5f, -0.5f, 0.5f),
-			new Vector3(-0.5f, -0.5f, 0.5f),
-			new Vector3(-0.5f, 0.5f, 0.5f),
-			new Vector3(0.5f, 0.5f, -0.5f),
-			new Vector3(0.5f, -0.5f, -0.5f),
+			new Vector3(-0.5f, -0.5f,  0.5f),
+			new Vector3( 0.5f, -0.5f,  0.5f),
+			new Vector3( 0.5f,  0.5f,  0.5f),
+			new Vector3(-0.5f,  0.5f,  0.5f),
+			new Vector3(-0.5f,  0.5f, -0.5f),
+			new Vector3( 0.5f,  0.5f, -0.5f),
+			new Vector3( 0.5f, -0.5f, -0.5f),
 			new Vector3(-0.5f, -0.5f, -0.5f),
-			new Vector3(-0.5f, 0.5f, -0.5f),
-			new Vector3(0.5f, 0.5f, -0.5f),
-			new Vector3(-0.5f, 0.5f, -0.5f),
+			new Vector3(-0.5f, -0.5f,  0.5f),
+			new Vector3(-0.5f,  0.5f,  0.5f),
+			new Vector3(-0.5f,  0.5f, -0.5f),
 			new Vector3(-0.5f, -0.5f, -0.5f),
-			new Vector3(0.5f, -0.5f, -0.5f)
+			new Vector3( 0.5f, -0.5f, -0.5f),
+			new Vector3( 0.5f,  0.5f, -0.5f),
+			new Vector3( 0.5f,  0.5f,  0.5f),
+			new Vector3( 0.5f, -0.5f,  0.5f),
+			new Vector3( 0.5f,  0.5f,  0.5f),
+			new Vector3( 0.5f,  0.5f, -0.5f),
+			new Vector3(-0.5f,  0.5f, -0.5f),
+			new Vector3(-0.5f,  0.5f,  0.5f),
+			new Vector3(-0.5f, -0.5f,  0.5f),
+			new Vector3(-0.5f, -0.5f, -0.5f),
+			new Vector3( 0.5f, -0.5f, -0.5f),
+			new Vector3( 0.5f, -0.5f,  0.5f),
 		};
 		myBox.uv = new Vector2[]{
-			new Vector2(1.0f, 1.0f),
-			new Vector2(1.0f, 0.0f),
-			new Vector2(0.0f, 0.0f),
-			new Vector2(0.0f, 1.0f),
-			new Vector2(0.0f, 1.0f),
 			new Vector2(0.0f, 0.0f),
 			new Vector2(1.0f, 0.0f),
 			new Vector2(1.0f, 1.0f),
-			new Vector2(1.0f, 0.0f),
-			new Vector2(0.0f, 0.0f),
 			new Vector2(0.0f, 1.0f),
-			new Vector2(1.0f, 1.0f)
+			new Vector2(0.0f, 0.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f),
+			new Vector2(0.0f, 1.0f),
+			new Vector2(0.0f, 0.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f),
+			new Vector2(0.0f, 1.0f),
+			new Vector2(0.0f, 0.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f),
+			new Vector2(0.0f, 1.0f),
+			new Vector2(0.0f, 0.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f),
+			new Vector2(0.0f, 1.0f),
+			new Vector2(0.0f, 0.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f),
+			new Vector2(0.0f, 1.0f),
 		};
-		// myBox.triangles = new int[]{
-		// 	// note that we start from 0!
-		// 	0, 1, 3, // first triangle
-		// 	1, 2, 3, // second triangle
-		// 	0, 4, 5,
-		// 	0, 5, 1,
-		// 	2, 6, 3,
-		// 	6, 7, 3,
-		// 	4, 5, 6,
-		// 	4, 6, 7,
-		// 	0, 3, 9,
-		// 	0, 9, 8,
-		// 	1, 2, 11,
-		// 	2, 11, 10
-		// 	// 0, 1, 2
-		// };
 		myBox.triangles = new int[]{
-			// note that we start from 0!
-			1, 0, 3, // first triangle
-			2, 1, 3, // second triangle
-			4, 0, 5,
-			5, 0, 1,
-			6, 2, 3,
-			7, 6, 3,
-			4, 5, 6,
-			4, 6, 7,
-			3, 0, 9, // 8==>4  9==>7 10==>6 11==>5
-			9, 0, 8,
-			1, 2, 11,
-			11,2, 10
-			// 0, 1, 2
+			 0,  1,  2,  0,  2,  3, // front
+			 4,  5,  6,  4,  6,  7, // back
+			 8,  9, 10,  8, 10, 11, // left
+			12, 13, 14, 12, 14, 15, // right
+			16, 17, 18, 16, 18, 19, // up
+			20, 21, 22, 20, 22, 23, // down
 		};
 		MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
 		meshFilter.sharedMesh = myBox;
