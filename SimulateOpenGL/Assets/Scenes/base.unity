@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 3
-  MouseSensitivity: 5
+  MouseSensitivity: 3
 --- !u!114 &988598349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   awesomeFace: {fileID: 2100000, guid: 7aa6bab05c36844759d712aa5066efc9, type: 2}
+  allBoxes: []
+  awesomeAlpha: 0
+  colorAlpha: 0
 --- !u!1 &1177711409
 GameObject:
   m_ObjectHideFlags: 0

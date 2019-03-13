@@ -61,7 +61,7 @@ Material:
     m_Floats:
     - _AwesomeAlpha: 0.5
     - _BumpScale: 1
-    - _ColorAlpha: 0.9
+    - _ColorAlpha: 0.2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
