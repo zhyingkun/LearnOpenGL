@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraCtrl : MonoBehaviour
 {
 
-	public float speed = 0.1f;
+	public float MovementSpeed = 0.1f;
+	public float MouseSensitivity = 0.1f;
 	// Use this for initialization
 	void Start()
 	{
@@ -18,28 +19,32 @@ public class CameraCtrl : MonoBehaviour
 		this.processView();
 		this.processMove();
 	}
-	void processView(){
-		
+	void processView()
+	{
+		float h = MouseSensitivity * Input.GetAxis("Mouse X");
+		float v = -MouseSensitivity * Input.GetAxis("Mouse Y");
+		this.transform.Rotate(v, h, 0);
 	}
 	void processMove()
 	{
 		Vector3 currentPosition = this.transform.position;
 		Vector3 delta = new Vector3(0.0f, 0.0f, 0.0f);
+		float velocity = MovementSpeed * Time.deltaTime;
 		if (Input.GetKey(KeyCode.A))
 		{
-			delta.x = -1 * speed;
+			delta -= velocity * this.transform.right;
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
-			delta.x = speed;
+			delta += velocity * this.transform.right;
 		}
 		if (Input.GetKey(KeyCode.W))
 		{
-			delta.z = speed;
+			delta += velocity * this.transform.forward;
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
-			delta.z = -1 * speed;
+			delta -= velocity * this.transform.forward;
 		}
 		this.transform.position = currentPosition + delta;
 

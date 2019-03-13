@@ -39,11 +39,15 @@
 			uniform sampler2D _AwesomeFace;
 			uniform float _AwesomeAlpha;
 			uniform float _ColorAlpha;
+			// uniform float4x4 model;
+			// uniform float4x4 view;
+			// uniform float4x4 projection;
 			
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.gl_Position = UnityObjectToClipPos(v.aPos);
+				// o.gl_Position = projection * view * model * v.aPos;
 				o.TexCoord = TRANSFORM_TEX(v.aTexCoord, _MainTex);
 				o.vertexColor = v.aColor;
 				return o;
