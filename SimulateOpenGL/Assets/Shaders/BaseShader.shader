@@ -3,6 +3,9 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_AwesomeFace ("AwesomeFace", 2D) = "white" {}
+		_AwesomeAlpha ("AwesomeAlpha", float) = 0.5
+		_ColorAlpha ("ColorAlpha", float) = 0.2
 	}
 	SubShader
 	{
@@ -14,43 +17,45 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			// make fog work
-			#pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
 
 			struct appdata
 			{
-				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
+				float4 aPos : POSITION;
+				float4 aColor : COLOR0;
+				float2 aTexCoord : TEXCOORD0;
 			};
 
 			struct v2f
 			{
-				float2 uv : TEXCOORD0;
-				UNITY_FOG_COORDS(1)
-				float4 vertex : SV_POSITION;
+				float4 gl_Position : SV_POSITION;
+				float2 TexCoord : TEXCOORD0;
+				float4 vertexColor : COLOR0;
 			};
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			uniform sampler2D _MainTex;
+			uniform float4 _MainTex_ST;
+			uniform sampler2D _AwesomeFace;
+			uniform float _AwesomeAlpha;
+			uniform float _ColorAlpha;
 			
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
+				o.gl_Position = UnityObjectToClipPos(v.aPos);
+				o.TexCoord = TRANSFORM_TEX(v.aTexCoord, _MainTex);
+				o.vertexColor = v.aColor;
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-				// apply fog
-				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col;
+				fixed4 color1 = tex2D(_MainTex, i.TexCoord);
+				fixed4 color2 = tex2D(_AwesomeFace, i.TexCoord);
+				fixed4 mixColor = lerp(color1, color2, _AwesomeAlpha);
+				return lerp(mixColor, i.vertexColor, _ColorAlpha);
 			}
 			ENDCG
 		}

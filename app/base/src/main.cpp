@@ -54,7 +54,8 @@ bool firstMouse = true;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f; // Last Frame Time
-
+float awesomeAlpha = 0.5f;
+float colorAlpha = 0.2f;
 
 void glfwErrorHandler(int code, const char *desc)
 {
@@ -127,6 +128,43 @@ void handleKeyCallback(GLFWwindow *window, int key, int scancode, int action, in
 			{
 				cout << "zykTest Key Z Pressed" << endl;
 			}
+			break;
+		case GLFW_KEY_UP:
+			if (action == GLFW_PRESS || action == GLFW_REPEAT)
+			{
+				awesomeAlpha += 0.1f;
+				if (awesomeAlpha > 1.0){
+					awesomeAlpha = 1.0;
+				}
+			}
+			break;
+		case GLFW_KEY_DOWN:
+			if (action == GLFW_PRESS || action == GLFW_REPEAT)
+			{
+				awesomeAlpha -= 0.1f;
+				if (awesomeAlpha < 0.0){
+					awesomeAlpha = 0.0;
+				}
+			}
+			break;
+		case GLFW_KEY_RIGHT:
+			if (action == GLFW_PRESS || action == GLFW_REPEAT)
+			{
+				colorAlpha += 0.1f;
+				if (colorAlpha > 1.0){
+					colorAlpha = 1.0;
+				}
+			}
+			break;
+		case GLFW_KEY_LEFT:
+			if (action == GLFW_PRESS || action == GLFW_REPEAT)
+			{
+				colorAlpha -= 0.1f;
+				if (colorAlpha < 0.0){
+					colorAlpha = 0.0;
+				}
+			}
+			break;
 		default:
 			break;
 	}
@@ -178,9 +216,9 @@ GLuint configVertexBufferObj(GLsizeiptr size, const GLvoid *vertices)
 	return VBO;
 }
 
-unsigned int configTexture(const char *imagePath, GLenum format)
+GLuint configTexture(const GLchar *imagePath, GLenum format)
 {
-	unsigned int texture;
+	GLuint texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	// Texture arround
@@ -188,8 +226,12 @@ unsigned int configTexture(const char *imagePath, GLenum format)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	int width, height, nrChannels;
-	unsigned char *data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	GLint width, height, nrChannels;
+	GLubyte *data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -215,9 +257,9 @@ unsigned int configTexture(const char *imagePath, GLenum format)
 	return texture;
 }
 
-unsigned int configElementBufferObj(GLsizeiptr size, const void *indices)
+GLuint configElementBufferObj(GLsizeiptr size, const GLvoid *indices)
 {
-	unsigned int EBO;
+	GLuint EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
@@ -225,7 +267,7 @@ unsigned int configElementBufferObj(GLsizeiptr size, const void *indices)
 	return EBO;
 }
 
-unsigned int configVertexData()
+GLuint configVertexData()
 {
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -392,7 +434,7 @@ int main(int argc, char* argv[])
 	// either set it manually like so:
 	// glUniform1i(glGetUniformLocation(ourShader.ID, "ourTexture"), 0);
 	// or set it via the texture class
-	ourShader.setInt("ourTexture", 0);
+	ourShader.setInt("texture1", 0); // set which sampler use which ActiveTexture
 	ourShader.setInt("texture2", 1);
 	// ourShader.use();
 	// ourShader.setFloat("xOffset", 0.0);
@@ -410,7 +452,13 @@ int main(int argc, char* argv[])
 		glm::vec3(-1.3f, 1.0f, -1.5f),
 	};
 	
-	glfwSwapInterval(1);
+	glfwSwapInterval(1); // 1 means 60fps
+	glEnable(GL_CULL_FACE); // default is disable
+	glCullFace(GL_BACK); // GL_FRONT, GL_FRONT_AND_BACK, default is GL_BACK
+	glEnable(GL_FRONT_FACE); // default is disable
+	glFrontFace(GL_CCW); // GL_CW, default is GL_CCW
+//	glPolygonMode
+//	glPolygonOffset
 	glEnable(GL_DEPTH_TEST);
 
 	// render loop
@@ -447,6 +495,9 @@ int main(int argc, char* argv[])
 		// camera/view transformation
 		glm::mat4 view = camera.GetViewMatrix();
 		ourShader.setMat4("view", view);
+		
+		ourShader.setFloat("awesomeAlpha", awesomeAlpha);
+		ourShader.setFloat("colorAlpha", colorAlpha);
 		
 		glBindVertexArray(VAO);
 		for (unsigned int i = 0; i < 10; i++)

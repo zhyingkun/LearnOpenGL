@@ -3,8 +3,7 @@ using namespace std;
 #include <math.h>
 #include <iomanip>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 void displayMat4(glm::mat4 trans)
 {
