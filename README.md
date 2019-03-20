@@ -56,7 +56,7 @@ cmake -G "Visual Studio 15 2017 Win64" ..
 	+ a. glfw：代码来自[https://github.com/glfw/glfw]
 	+ b. glad：代码来自[https://github.com/Dav1dde/glad]
 	+ c. glm：代码来自[https://github.com/g-truc/glm]
-	+ d. stb_image：代码来自[https://github.com/nothings/stb]
+	+ d. stb：代码来自[https://github.com/nothings/stb]
 
 3. SimulateOpenGL：这是一个Unity2017工程，用于说明Unity的渲染流程类似OpenGL（针对app文件夹中的所有Demo，都对应Unity中的一个场景，力图做到类似的输入数据得到类似的结果！）
 

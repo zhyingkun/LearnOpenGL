@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(stb_image
+project(stb
 	VERSION 1.0.0
 	LANGUAGES C CXX)
 

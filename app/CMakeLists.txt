@@ -4,7 +4,7 @@ project(app)
 include_directories(../libs/glfw/include)
 include_directories(../libs/glm/include)
 include_directories(../libs/glad/include)
-include_directories(../libs/stb_image/include)
+include_directories(../libs/stb/include)
 include_directories(./common/include)
 
 add_subdirectory(./glfw-win)

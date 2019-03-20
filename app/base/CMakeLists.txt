@@ -49,7 +49,7 @@ set(BASE_RESOURCE ${SHADER_FILES} ${TEXTURE_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	MACOSX_BUNDLE TRUE
 	RESOURCE "${BASE_RESOURCE}")# Here must has "", if not, will failed in cmake 3.13.1
-target_link_libraries(${PROJECT_NAME} glfw glad stb_image)
+target_link_libraries(${PROJECT_NAME} glfw glad stb)
 
 find_package(OpenGL REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})

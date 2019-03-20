@@ -138,7 +138,7 @@ endif()
 
 set(_GLFW_BUILD_DLL 1)
 source_group(src FILES ${glfw_SOURCES})
-source_group(header FILES ${glfw_HEADERS})
+source_group(include FILES ${glfw_HEADERS})
 add_library(${PROJECT_NAME} SHARED ${glfw_SOURCES} ${glfw_HEADERS})
 # add_library(${PROJECT_NAME} STATIC ${glfw_SOURCES} ${glfw_HEADERS})
 set_target_properties(${PROJECT_NAME} PROPERTIES
