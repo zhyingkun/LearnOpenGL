@@ -26,11 +26,10 @@ endif()
 include_directories(./include)
 
 aux_source_directory(./src STB_IMAGE_SRC)
-set(STB_IMAGE_HEADER
-	./include/stb_image.h)
+file(GLOB STB_IMAGE_HEADER "./include/*.h")
 
 source_group(src FILES ${STB_IMAGE_SRC})
-source_group(header FILES ${STB_IMAGE_HEADER})
+source_group(include FILES ${STB_IMAGE_HEADER})
 
 if(WIN32)
 	add_library(${PROJECT_NAME} STATIC ${STB_IMAGE_SRC} ${STB_IMAGE_HEADER})
