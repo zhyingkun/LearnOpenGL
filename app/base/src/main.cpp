@@ -204,9 +204,9 @@ GLFWwindow* initAndConfigGLFW()
 	return window;
 }
 
-GLuint configVertexBufferObj(GLsizeiptr size, const GLvoid *vertices)
+unsigned int configVertexBufferObj(GLsizeiptr size, const void *vertices)
 {
-	GLuint VBO;
+	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
@@ -214,9 +214,9 @@ GLuint configVertexBufferObj(GLsizeiptr size, const GLvoid *vertices)
 	return VBO;
 }
 
-GLuint configTexture(const GLchar *imagePath, GLenum format)
+unsigned int configTexture(const char *imagePath, GLenum format)
 {
-	GLuint texture;
+	unsigned int texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	// Texture arround
@@ -228,8 +228,8 @@ GLuint configTexture(const GLchar *imagePath, GLenum format)
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	GLint width, height, nrChannels;
-	GLubyte *data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -255,9 +255,9 @@ GLuint configTexture(const GLchar *imagePath, GLenum format)
 	return texture;
 }
 
-GLuint configElementBufferObj(GLsizeiptr size, const GLvoid *indices)
+unsigned int configElementBufferObj(GLsizeiptr size, const void *indices)
 {
-	GLuint EBO;
+	unsigned int EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
@@ -265,11 +265,11 @@ GLuint configElementBufferObj(GLsizeiptr size, const GLvoid *indices)
 	return EBO;
 }
 
-GLuint configVertexData()
+unsigned int configVertexData()
 {
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	GLfloat vertices[] = {
+	float vertices[] = {
 		-0.5f, -0.5f,  0.5f, // In OpenGL: front
 		 0.5f, -0.5f,  0.5f, // In Unity : back
 		 0.5f,  0.5f,  0.5f,
@@ -295,7 +295,7 @@ GLuint configVertexData()
 		 0.5f, -0.5f, -0.5f,
 		 0.5f, -0.5f,  0.5f,
 	};
-	GLfloat texColor[] = {
+	float texColor[] = {
 		1.0f, 0.0f, 0.0f, // first
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
@@ -321,7 +321,7 @@ GLuint configVertexData()
 		0.0f, 0.0f, 1.0f,
 		1.0f, 1.0f, 1.0f,
 	};
-	GLfloat texCoord[] = {
+	float texCoord[] = {
 		0.0f, 0.0f, // In OpenGL: front
 		1.0f, 0.0f, // In Unity : back
 		1.0f, 1.0f,
@@ -347,7 +347,7 @@ GLuint configVertexData()
 		1.0f, 1.0f,
 		0.0f, 1.0f,
 	};
-	GLuint indices[] = {
+	unsigned int indices[] = {
 		 0,  1,  2,  0,  2,  3, // In OpenGL: front, In Unity: back
 		 4,  5,  6,  4,  6,  7, // In OpenGL: back, In Unity: front
 		 8,  9, 10,  8, 10, 11, // left
@@ -356,7 +356,7 @@ GLuint configVertexData()
 		20, 21, 22, 20, 22, 23, // down
 	};
 
-	GLuint vertexVBO, colorVBO, texCoordVBO, VAO, EBO;
+	unsigned int vertexVBO, colorVBO, texCoordVBO, VAO, EBO;
 	vertexVBO = configVertexBufferObj(sizeof(vertices), vertices);
 	colorVBO = configVertexBufferObj(sizeof(texColor), texColor);
 	texCoordVBO = configVertexBufferObj(sizeof(texCoord), texCoord);
@@ -406,7 +406,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	
-	GLint nrAttributes;
+	int nrAttributes;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
 	cout << "Maximum nr of vertex attributes supported: " << nrAttributes << endl;
 	
@@ -416,11 +416,11 @@ int main(int argc, char* argv[])
 	
 	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
 	//firefox-icon.png container.jpg
-	GLuint texture1 = configTexture(pContainerJpgPath, GL_RGB);
-	GLuint texture2 = configTexture(pAwesomefacePngPath, GL_RGBA);
+	unsigned int texture1 = configTexture(pContainerJpgPath, GL_RGB);
+	unsigned int texture2 = configTexture(pAwesomefacePngPath, GL_RGBA);
 	
 	// Config Vertex Data
-	GLuint VAO = configVertexData();
+	unsigned int VAO = configVertexData();
 	
 	// uncomment this call to draw in wireframe polygons.
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -476,7 +476,7 @@ int main(int argc, char* argv[])
 		processInput(window);
 		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //background color
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // GL_STENCIL_BUFFER_BIT
 		// bind textures on corresponding texture units
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
@@ -486,6 +486,7 @@ int main(int argc, char* argv[])
 		ourShader.use();
 		// // create transformations
 		glm::mat4 model = glm::mat4(1.0f);
+//		ourShader.setMat4("model", model);
 		// pass projection matrix to shader (note that in this case it could change every frame)
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		ourShader.setMat4("projection", projection);

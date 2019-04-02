@@ -24,13 +24,32 @@ elseif(WIN32)
 endif()
 
 aux_source_directory(./src MAIN_SRC)
-source_group(src FILES ${MAIN_SRC})
-add_executable(${PROJECT_NAME} ${MAIN_SRC})
+aux_source_directory(../common/src COMMON_SRC)
+file(GLOB HEADER "./src/*.h")
+file(GLOB COMMON_HEADER "../common/include/*.h")
+source_group(src FILES ${MAIN_SRC} ${HEADER})
+source_group(common FILES ${COMMON_SRC} ${COMMON_HEADER})
+
+file(GLOB SHADER_FILES "./shaders/*")
+source_group(shaders FILES ${SHADER_FILES})
+
+add_executable(${PROJECT_NAME}
+	${MAIN_SRC}
+	${COMMON_SRC}
+	${HEADER}
+	${COMMON_HEADER}
+	${SHADER_FILES})
+set(BASE_RESOURCE ${SHADER_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
-	MACOSX_BUNDLE TRUE)
+	MACOSX_BUNDLE TRUE
+	RESOURCE "${BASE_RESOURCE}")
 
 target_link_libraries(${PROJECT_NAME} glfw glad)
 
 find_package(OpenGL REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
+
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
+endif(CMAKE_SYSTEM_NAME MATCHES "Linux")

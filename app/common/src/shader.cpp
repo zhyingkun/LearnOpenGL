@@ -1,7 +1,13 @@
 #include <shader.h>
 
-Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
+Shader::Shader(const char *vertexPath, const char *fragmentPath)
 {
+//	string prefixStr = string(prefix);
+//	string vertexStr = prefixStr + string(vert);
+//	string fragmentStr = prefixStr + string(frag);
+//	const char* vertexPath = vertexStr.c_str();
+//	const char* fragmentPath = fragmentStr.c_str();
+
 	// 1. retrieve the vertex/fragment source code from filePath
 	string vertexCode;
 	string fragmentCode;
@@ -31,14 +37,14 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
 		cout << "zykTest Error: Shader files read error!" << endl;
 		exit(-1);
 	}
-	const GLchar *vShaderCode = vertexCode.c_str();
-	const GLchar *fShaderCode = fragmentCode.c_str();
+	const char *vShaderCode = vertexCode.c_str();
+	const char *fShaderCode = fragmentCode.c_str();
 	// 2. compile shaders
 
 	// int success;
 	// char infoLog[512];
 	// vertex shader
-	GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
+	unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
 	if (vertex == 0)
 	{
 		cout << "Create Shader Error!" << endl;
@@ -58,7 +64,7 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath)
 	cout << "SHADER_SOURCE_LENGTH: " << success << endl;
 	checkCompileErrors(vertex, "VERTEX");
 	// fragment Shader
-	GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &fShaderCode, NULL);
 	glCompileShader(fragment);
 	checkCompileErrors(fragment, "FRAGMENT");
