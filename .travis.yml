@@ -10,7 +10,7 @@ compiler:
   - clang++
 
 before_install:
-  - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get install -y libxrandr-dev libxrandr2 libxinerama-dev libxinerama1 libxcursor-dev libxcursor1 ; fi
+  - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get install -y libxrandr-dev libxrandr2 libxinerama-dev libxinerama1 libxcursor-dev libxcursor1 libxi-dev libxi6 ; fi
 
 script:
   - mkdir build && cd build
