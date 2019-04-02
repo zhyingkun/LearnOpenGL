@@ -1,5 +1,7 @@
 # LearnOpenGL
 
+[![Build Status](https://travis-ci.com/zhyingkun/LearnOpenGL.svg)](https://travis-ci.com/zhyingkun/LearnOpenGL)
+
 ----
 
 ## 基本介绍
