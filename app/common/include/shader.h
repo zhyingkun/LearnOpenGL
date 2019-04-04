@@ -33,6 +33,10 @@ class Shader
 	// ------------------------------------------------------------------------
 	void set4Float(const string &name, float value1, float value2, float value3, float value4) const;
 	// ------------------------------------------------------------------------
+	void setVec3(const string &name, glm::vec3 value) const;
+	// ------------------------------------------------------------------------
+	void setVec4(const string &name, glm::vec4 value) const;
+	// ------------------------------------------------------------------------
 	void setMat4fv(const string &name, glm::mat4 value) const;
 	// ------------------------------------------------------------------------
 	void setMat4(const string &name, const glm::mat4 &mat) const;
