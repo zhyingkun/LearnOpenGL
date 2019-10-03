@@ -16,7 +16,7 @@
 
 ## 如何编译
 
-##### 1. 在 Mac 上采用 Xcode 编译
+#### 1. 在 Mac 上采用 Xcode 编译
 
 ```bash
 cd LearnOpenGL
@@ -26,7 +26,7 @@ cmake -G "Xcode" ..
 
 此时已经在 buildXcode 文件夹下生成了 Xcode 工程，双击打开并编译即可
 
-##### 2. 直接命令行编译（支持 Mac 和 Linux）
+#### 2. 直接命令行编译（支持 Mac 和 Linux）
 
 ```bash
 cd LearnOpenGL
@@ -39,7 +39,7 @@ make
 
 make 命令会自动编译好可执行文件
 
-##### 3. 在 Windows 上使用 Cygwin + Visual Studio 2017 进行编译
+#### 3. 在 Windows 上使用 Cygwin + Visual Studio 2017 进行编译
 
 ```bash
 cd LearnOpenGL
