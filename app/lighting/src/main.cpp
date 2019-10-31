@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
 
   GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "lighting", NULL, NULL);
   if (window == NULL) {
-    std::cout << "Failed to create GLFW window" << std::endl;
+    cout << "Failed to create GLFW window" << endl;
     glfwTerminate();
     return -1;
   }
@@ -132,36 +132,71 @@ int main(int argc, char* argv[]) {
   glfwSwapInterval(1);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    std::cout << "Failed to initialize GLAD" << std::endl;
+    cout << "Failed to initialize GLAD" << endl;
     glfwTerminate();
     return -1;
   }
 
   Shader ourShader(pVertexShaderPath, pFragmentShaderPath);
   Shader lightShader(pLightVertPath, pLightFragPath);
-  vec3 lightPos = vec3(0.7f, 0.3f, 0.5f);
+  vec3 lightPos = vec3(1.2f, 0.01f, 0.01f);
   mat4 lightModel = mat4(1.0f);
   lightModel = translate(lightModel, lightPos);
   lightModel = scale(lightModel, vec3(0.2f));
   lightShader.setMat4("model", lightModel);
 
+  // clang-format off
   float vertices[] = {
-      -0.5f, -0.5f, 0.5f, // In OpenGL: front
-      0.5f,  -0.5f, 0.5f, // In Unity : back
-      0.5f,  0.5f,  0.5f,  -0.5f, 0.5f,  0.5f,  -0.5f, 0.5f,  -0.5f, // In OpenGL: back
-      0.5f,  0.5f,  -0.5f, // In Unity : front
-      0.5f,  -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, // left
-      -0.5f, 0.5f,  0.5f,  -0.5f, 0.5f,  -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,  -0.5f, -0.5f, // right
-      0.5f,  0.5f,  -0.5f, 0.5f,  0.5f,  0.5f,  0.5f,  -0.5f, 0.5f,  0.5f,  0.5f,  0.5f, // up
-      0.5f,  0.5f,  -0.5f, -0.5f, 0.5f,  -0.5f, -0.5f, 0.5f,  0.5f,  -0.5f, -0.5f, 0.5f, // down
-      -0.5f, -0.5f, -0.5f, 0.5f,  -0.5f, -0.5f, 0.5f,  -0.5f, 0.5f,
+      -0.5f, -0.5f,  0.5f, // In OpenGL: front
+       0.5f, -0.5f,  0.5f, // In Unity : back
+       0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f, -0.5f, // In OpenGL: back
+       0.5f,  0.5f, -0.5f, // In Unity : front
+       0.5f, -0.5f, -0.5f,
+      -0.5f, -0.5f, -0.5f,
+      -0.5f, -0.5f,  0.5f, // left
+      -0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f, -0.5f,
+      -0.5f, -0.5f, -0.5f,
+       0.5f, -0.5f, -0.5f, // right
+       0.5f,  0.5f, -0.5f,
+       0.5f,  0.5f,  0.5f,
+       0.5f, -0.5f,  0.5f,
+       0.5f,  0.5f,  0.5f, // up
+       0.5f,  0.5f, -0.5f,
+      -0.5f,  0.5f, -0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f, -0.5f,  0.5f, // down
+      -0.5f, -0.5f, -0.5f,
+       0.5f, -0.5f, -0.5f,
+       0.5f, -0.5f,  0.5f,
   };
   float normalDir[] = {
-      0.0f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,  0.0f, -1.0f,
-      0.0f,  0.0f,  -1.0f, 0.0f,  0.0f,  -1.0f, 0.0f, 0.0f,  -1.0f, -1.0f, 0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
-      -1.0f, 0.0f,  0.0f,  -1.0f, 0.0f,  0.0f,  1.0f, 0.0f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,  0.0f, 0.0f,
-      1.0f,  0.0f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,  1.0f, 0.0f,
-      0.0f,  -1.0f, 0.0f,  0.0f,  -1.0f, 0.0f,  0.0f, -1.0f, 0.0f,  0.0f,  -1.0f, 0.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
   };
   unsigned int indices[] = {
       0,  1,  2,  0,  2,  3, // In OpenGL: front, In Unity: back
@@ -171,6 +206,8 @@ int main(int argc, char* argv[]) {
       16, 17, 18, 16, 18, 19, // up
       20, 21, 22, 20, 22, 23, // down
   };
+  // clang-format on
+
   unsigned int vertexVBO, normalVBO, VAO, EBO;
 
   glGenBuffers(1, &vertexVBO);
