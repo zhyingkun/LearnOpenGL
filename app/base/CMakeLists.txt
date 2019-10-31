@@ -34,7 +34,7 @@ source_group(src FILES ${MAIN_SRC} ${HEADER})
 source_group(common FILES ${COMMON_SRC} ${COMMON_HEADER})
 
 file(GLOB SHADER_FILES "./shaders/*")
-file(GLOB TEXTURE_FILES "./textures/*")
+file(GLOB TEXTURE_FILES "../resources/textures/*")
 source_group(shaders FILES ${SHADER_FILES})
 source_group(textures FILES ${TEXTURE_FILES})
 
