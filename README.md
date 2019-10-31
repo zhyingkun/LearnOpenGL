@@ -6,10 +6,10 @@
 
 ## 基本介绍
 
-1. 这是根据网站 https://learnopengl-cn.github.io 的介绍构建出来的 OpenGL 工程
-2. 采用 C/C++实现，其中用到了众多开源库
+1. 这是根据网站 [LearnOpenGL-CN](https://learnopengl-cn.github.io) 的介绍构建出来的 OpenGL 工程
+2. 采用 C++ 实现，其中用到了众多开源库
 3. 在这里整个工程采用 cmake 管理编译过程，包括开源库的构建过程（抛弃了开源库自身的编译构建过程）
-4. 整个工程能完整的用 Xcode 或 Visual Studio 调试（包括用到的开源库）
+4. 整个工程能完整的用 Xcode 或 Visual Studio 进行调试（包括用到的开源库）
 5. 包含了 Unity 对于同样效果实现的工程
 
 ---
