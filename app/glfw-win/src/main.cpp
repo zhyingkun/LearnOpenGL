@@ -11,9 +11,11 @@ void glfwErrorHandler(int code, const char* desc) {
 void handleFramebufferSizeCallback(GLFWwindow* window, int width, int height) {
   (void)window;
   glViewport(0, 0, width, height);
+  cout << "change viewport: " << width << ", " << height << endl;
 }
 void processInput(GLFWwindow* window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    cout << "Escape has been pressed!" << endl;
     glfwSetWindowShouldClose(window, true);
   }
 }
