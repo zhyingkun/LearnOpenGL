@@ -11,9 +11,12 @@ using namespace std;
 #include <camera.h>
 
 #ifdef _WIN32
-// For Visual Studio
-const char* pVertexShaderPath = "../../../../app/template/shaders/vertexshader.vert";
-const char* pFragmentShaderPath = "../../../../app/template/shaders/fragmentshader.frag";
+// For Debug in Visual Studio
+const char* pVertexShaderPath = "../../../app/template/shaders/vertexshader.vert";
+const char* pFragmentShaderPath = "../../../app/template/shaders/fragmentshader.frag";
+// For Run alone
+// const char* pVertexShaderPath = "../../../../app/template/shaders/vertexshader.vert";
+// const char* pFragmentShaderPath = "../../../../app/template/shaders/fragmentshader.frag";
 #elif __APPLE__
 // For Xcode App
 const char* pVertexShaderPath = "../Resources/vertexshader.vert";

@@ -12,11 +12,16 @@ using namespace glm;
 #include <camera.h>
 
 #ifdef _WIN32
-// For Visual Studio
-const char* pVertexShaderPath = "../../../../app/lighting/shaders/vertexshader.vert";
-const char* pFragmentShaderPath = "../../../../app/lighting/shaders/fragmentshader.frag";
-const char* pLightVertPath = "../../../../app/lighting/shaders/light.vert";
-const char* pLightFragPath = "../../../../app/lighting/shaders/light.frag";
+// For Debug in Visual Studio
+const char* pVertexShaderPath = "../../../app/lighting/shaders/vertexshader.vert";
+const char* pFragmentShaderPath = "../../../app/lighting/shaders/fragmentshader.frag";
+const char* pLightVertPath = "../../../app/lighting/shaders/light.vert";
+const char* pLightFragPath = "../../../app/lighting/shaders/light.frag";
+// For Run alone
+// const char* pVertexShaderPath = "../../../../app/lighting/shaders/vertexshader.vert";
+// const char* pFragmentShaderPath = "../../../../app/lighting/shaders/fragmentshader.frag";
+// const char* pLightVertPath = "../../../../app/lighting/shaders/light.vert";
+// const char* pLightFragPath = "../../../../app/lighting/shaders/light.frag";
 #elif __APPLE__
 // For Xcode App
 const char* pVertexShaderPath = "../Resources/vertexshader.vert";
@@ -43,6 +48,7 @@ vec3 cameraPos = vec3(0.0f, 0.0f, 3.0f);
 vec3 cameraFront = vec3(0.0f, 0.0f, -1.0f);
 vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f);
 // camera
+Camera* cam = new Camera(vec3(0.0f, 0.0f, 3.0f));
 Camera camera(vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;

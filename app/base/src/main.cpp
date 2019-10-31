@@ -4,11 +4,16 @@ using namespace std;
 #include "base.h"
 
 #ifdef _WIN32
-// For Visual Studio
-const char* pVertexShaderPath = "../../../../app/base/shaders/vertexshader.vert";
-const char* pFragmentShaderPath = "../../../../app/base/shaders/fragmentshader.frag";
-const char* pContainerJpgPath = "../../../../app/resources/textures/container.jpg";
-const char* pAwesomefacePngPath = "../../../../app/resources/textures/awesomeface.png";
+// For Debug in Visual Studio
+const char* pVertexShaderPath = "../../../app/base/shaders/vertexshader.vert";
+const char* pFragmentShaderPath = "../../../app/base/shaders/fragmentshader.frag";
+const char* pContainerJpgPath = "../../../app/resources/textures/container.jpg";
+const char* pAwesomefacePngPath = "../../../app/resources/textures/awesomeface.png";
+// For Run alone
+// const char* pVertexShaderPath = "../../../../app/base/shaders/vertexshader.vert";
+// const char* pFragmentShaderPath = "../../../../app/base/shaders/fragmentshader.frag";
+// const char* pContainerJpgPath = "../../../../app/resources/textures/container.jpg";
+// const char* pAwesomefacePngPath = "../../../../app/resources/textures/awesomeface.png";
 #elif __APPLE__
 // For Xcode App
 const char* pVertexShaderPath = "../Resources/vertexshader.vert";
