@@ -3,7 +3,8 @@ project(base
 	VERSION 0.1.0.0
 	# DESCRIPTION "OpenGL base app"
 	# HOMEPAGE_URL "www.zhyingkun.com"
-	LANGUAGES C CXX)
+	LANGUAGES C CXX
+)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
 	set(CMAKE_BUILD_TYPE "Debug")
@@ -20,8 +21,8 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 elseif(WIN32)
-	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall")
-	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS         "-Wall")
+	# set(CMAKE_CXX_FLAGS_DEBUG   "-g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 endif()
 
@@ -44,11 +45,14 @@ add_executable(${PROJECT_NAME}
 	${HEADER}
 	${COMMON_HEADER}
 	${SHADER_FILES}
-	${TEXTURE_FILES})
+	${TEXTURE_FILES}
+)
 set(BASE_RESOURCE ${SHADER_FILES} ${TEXTURE_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER "app"
 	MACOSX_BUNDLE TRUE
-	RESOURCE "${BASE_RESOURCE}")# Here must has "", if not, will failed in cmake 3.13.1
+	RESOURCE "${BASE_RESOURCE}" # Here must has "", if not, will failed in cmake 3.13.1
+)
 target_link_libraries(${PROJECT_NAME} glfw glad stb)
 
 find_package(OpenGL REQUIRED)

@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(glfw
 	VERSION 3.3
-	LANGUAGES C CXX)
+	LANGUAGES C CXX
+)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
 	set(CMAKE_BUILD_TYPE "Debug")
@@ -18,8 +19,8 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 elseif(WIN32)
-	set(CMAKE_CXX_FLAGS         "-std=c++11 -Wall")
-	set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+	set(CMAKE_CXX_FLAGS         "-Wall")
+	# set(CMAKE_CXX_FLAGS_DEBUG   "-g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 endif()
 
@@ -42,14 +43,16 @@ set(common_HEADERS
 	"./src/internal.h"
 	"./src/mappings.h"
 	"./include/GLFW/glfw3.h"
-	"./include/GLFW/glfw3native.h")
+	"./include/GLFW/glfw3native.h"
+)
 set(common_SOURCES
 	"./src/context.c"
 	"./src/init.c"
 	"./src/input.c"
 	"./src/monitor.c"
 	"./src/vulkan.c"
-	"./src/window.c")
+	"./src/window.c"
+)
 
 if(_GLFW_COCOA)
 	set(glfw_HEADERS ${common_HEADERS} ./src/cocoa_platform.h ./src/cocoa_joystick.h
@@ -83,7 +86,8 @@ if (_GLFW_COCOA)
 		"-framework Cocoa"
 		"-framework IOKit"
 		"-framework CoreFoundation"
-		"-framework CoreVideo")
+		"-framework CoreVideo"
+	)
 endif()
 
 #--------------------------------------------------------------------
@@ -114,7 +118,8 @@ if (_GLFW_X11)
 		"${X11_Xrandr_INCLUDE_PATH}"
 		"${X11_Xinerama_INCLUDE_PATH}"
 		"${X11_Xkb_INCLUDE_PATH}"
-		"${X11_Xcursor_INCLUDE_PATH}")
+		"${X11_Xcursor_INCLUDE_PATH}"
+	)
 endif()
 
 #--------------------------------------------------------------------
@@ -139,19 +144,25 @@ endif()
 set(_GLFW_BUILD_DLL 1)
 source_group(src FILES ${glfw_SOURCES})
 source_group(include FILES ${glfw_HEADERS})
-add_library(${PROJECT_NAME} SHARED ${glfw_SOURCES} ${glfw_HEADERS})
-# add_library(${PROJECT_NAME} STATIC ${glfw_SOURCES} ${glfw_HEADERS})
+if(WIN32)
+	add_library(${PROJECT_NAME} STATIC ${glfw_SOURCES} ${glfw_HEADERS})
+else(WIN32)
+	add_library(${PROJECT_NAME} SHARED ${glfw_SOURCES} ${glfw_HEADERS})
+endif(WIN32)
 set_target_properties(${PROJECT_NAME} PROPERTIES
+	FOLDER "libs"
 	OUTPUT_NAME "${PROJECT_NAME}"
 	VERSION "3.3"
 	SOVERSION "3"
 	POSITION_INDEPENDENT_CODE ON
-	FOLDER "GLFW3")
+	FOLDER "GLFW3"
+)
 target_compile_definitions(${PROJECT_NAME} PRIVATE _GLFW_USE_CONFIG_H)
 target_compile_definitions(${PROJECT_NAME} PRIVATE _GLFW_BUILD_DLL)
 target_include_directories(${PROJECT_NAME} PUBLIC "./include")
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"./src"
 	${GLFW_CONFIG_DIR}
-	${glfw_INCLUDE_DIRS})
+	${glfw_INCLUDE_DIRS}
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${glfw_LIBRARIES})
