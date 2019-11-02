@@ -320,10 +320,10 @@ void LightingApp::RenderLoop() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // GL_STENCIL_BUFFER_BIT
 
     // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textureContainer2);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, textureContainer2Specular);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textureContainer2);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textureContainer2Specular);
 
     // Light box
     // camera/view transformation
@@ -331,9 +331,9 @@ void LightingApp::RenderLoop() {
     // pass projection matrix to shader (note that in this case it could change every frame)
     mat4 projection = perspective(radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     vec3 lightColor;
-    //    lightColor.x = sin(glfwGetTime() * 2.0f);
-    //    lightColor.y = sin(glfwGetTime() * 0.7f);
-    //    lightColor.z = sin(glfwGetTime() * 1.3f);
+    // lightColor.x = sin(glfwGetTime() * 2.0f);
+    // lightColor.y = sin(glfwGetTime() * 0.7f);
+    // lightColor.z = sin(glfwGetTime() * 1.3f);
     lightColor.x = 1.0f;
     lightColor.y = 1.0f;
     lightColor.z = 1.0f;
@@ -350,17 +350,22 @@ void LightingApp::RenderLoop() {
     boxShader->use();
     // // create transformations
     glm::mat4 model = glm::mat4(1.0f);
-    //      model = scale(model, vec3(0.5, 0.5, 0.5));
-    //		ourShader.setMat4("model", model);
+    // model = scale(model, vec3(0.5, 0.5, 0.5));
+    // ourShader.setMat4("model", model);
     // pass projection matrix to shader (note that in this case it could change every frame)
     projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     boxShader->setMat4("projection", projection);
 
     // camera/view transformation
-    //    glm::mat4 view = camera->GetViewMatrix();
+    // glm::mat4 view = camera->GetViewMatrix();
     boxShader->setMat4("view", view);
 
     boxShader->setVec3("light.position", lightPosition);
+    // boxShader->setVec3("light.direction", vec3(-0.2f, -1.0f, -0.3f));
+    boxShader->setFloat("light.constant", 1.0f);
+    boxShader->setFloat("light.linear", 0.09f);
+    boxShader->setFloat("light.quadratic", 0.032f);
+
     boxShader->setVec3("viewPos", camera->Position);
     // light properties
     vec3 diffuseColor = lightColor * vec3(0.8f); // decrease the influence
@@ -368,10 +373,10 @@ void LightingApp::RenderLoop() {
     boxShader->setVec3("light.ambient", ambientColor);
     boxShader->setVec3("light.diffuse", diffuseColor);
     boxShader->setVec3("light.specular", vec3(2.0f, 2.0f, 2.0f)); // material properties
-//    boxShader->setVec3("material.ambient", vec3(1.0f, 0.5f, 0.31f));
-//    boxShader->setVec3("material.diffuse", vec3(1.0f, 0.5f, 0.31f));
-//    boxShader->setVec3("material.specular", vec3(0.7f, 0.7f, 0.7f));
-      // specular lighting doesn't have full effect on this object's material
+    // boxShader->setVec3("material.ambient", vec3(1.0f, 0.5f, 0.31f));
+    // boxShader->setVec3("material.diffuse", vec3(1.0f, 0.5f, 0.31f));
+    // boxShader->setVec3("material.specular", vec3(0.7f, 0.7f, 0.7f));
+    // specular lighting doesn't have full effect on this object's material
     boxShader->setFloat("material.shininess", 32.0f);
 
     glBindVertexArray(boxVAO);
