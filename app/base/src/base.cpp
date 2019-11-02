@@ -359,6 +359,14 @@ void BaseApp::RenderLoop() {
 }
 
 void BaseApp::Terminate() {
+  glDeleteVertexArrays(1, &this->boxVAO);
+  glDeleteBuffers(1, &this->boxVertexVBO);
+  glDeleteBuffers(1, &this->boxColorVBO);
+  glDeleteBuffers(1, &this->boxTexCoordVBO);
+  glDeleteBuffers(1, &this->boxEBO);
+
+  delete this->boxShader;
+
   // glfw: terminate, clearing all previously allocated GLFW resources.
   // ------------------------------------------------------------------
   glfwTerminate();
