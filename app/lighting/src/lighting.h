@@ -23,8 +23,8 @@ private:
   Shader* boxShader;
   Shader* lightShader;
 
-  GLObject textureContainer;
-  GLObject textureAwesomeFace;
+  GLObject textureContainer2;
+  GLObject textureContainer2Specular;
 
   GLObject boxVAO;
   GLObject boxVertexVBO;

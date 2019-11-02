@@ -102,17 +102,17 @@ void LightingApp::BuildAndCompileBoxShader(const char* vertexPath, const char* f
 }
 void LightingApp::BuildAndCompileLightShader(const char* vertexPath, const char* fragmentPath) {
   this->lightShader = new Shader(vertexPath, fragmentPath);
-  lightPosition = vec3(1.2f, 0.01f, 0.01f);
+  lightPosition = vec3(0.0f, 0.0f, 3.2f);
   lightModel = mat4(1.0f);
   lightModel = translate(lightModel, lightPosition);
   lightModel = scale(lightModel, vec3(0.2f));
   lightShader->setMat4("model", lightModel);
 }
 
-void LightingApp::LoadAllTextures(const char* containerPath, const char* awesomeFacePath) {
+void LightingApp::LoadAllTextures(const char* container2Path, const char* container2SpecularPath) {
   stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-  this->textureContainer = this->CreateTexture(containerPath, GL_RGB);
-  this->textureAwesomeFace = this->CreateTexture(awesomeFacePath, GL_RGBA);
+  this->textureContainer2 = this->CreateTexture(container2Path, GL_RGBA);
+  this->textureContainer2Specular = this->CreateTexture(container2SpecularPath, GL_RGBA);
 }
 
 void LightingApp::SetTexturesToBoxShader() {
@@ -122,8 +122,8 @@ void LightingApp::SetTexturesToBoxShader() {
   // either set it manually like so:
   // glUniform1i(glGetUniformLocation(this->boxShader.ID, "ourTexture"), 0);
   // or set it via the texture class
-  this->boxShader->setInt("texture1", 0); // set which sampler use which ActiveTexture
-  this->boxShader->setInt("texture2", 1); // the same with fragment shader
+  this->boxShader->setInt("material.diffuse", 0); // set which sampler use which ActiveTexture
+  this->boxShader->setInt("material.specular", 1); // the same with fragment shader
   // this->boxShader.use();
   // this->boxShader.setFloat("xOffset", 0.0);
 }
@@ -320,10 +320,10 @@ void LightingApp::RenderLoop() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // GL_STENCIL_BUFFER_BIT
 
     // bind textures on corresponding texture units
-    //    glActiveTexture(GL_TEXTURE0);
-    //    glBindTexture(GL_TEXTURE_2D, textureContainer);
-    //    glActiveTexture(GL_TEXTURE1);
-    //    glBindTexture(GL_TEXTURE_2D, textureAwesomeFace);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureContainer2);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textureContainer2Specular);
 
     // Light box
     // camera/view transformation
@@ -336,7 +336,7 @@ void LightingApp::RenderLoop() {
     //    lightColor.z = sin(glfwGetTime() * 1.3f);
     lightColor.x = 1.0f;
     lightColor.y = 1.0f;
-    lightColor.z = 0.0f;
+    lightColor.z = 1.0f;
 
     lightShader->use();
     lightShader->setMat4("model", lightModel);
@@ -363,15 +363,15 @@ void LightingApp::RenderLoop() {
     boxShader->setVec3("light.position", lightPosition);
     boxShader->setVec3("viewPos", camera->Position);
     // light properties
-    vec3 diffuseColor = lightColor * vec3(0.5f); // decrease the influence
-    vec3 ambientColor = diffuseColor * vec3(0.2f); // low influence
+    vec3 diffuseColor = lightColor * vec3(0.8f); // decrease the influence
+    vec3 ambientColor = diffuseColor * vec3(0.5f); // low influence
     boxShader->setVec3("light.ambient", ambientColor);
     boxShader->setVec3("light.diffuse", diffuseColor);
-    boxShader->setVec3("light.specular", vec3(1.0f, 1.0f, 1.0f)); // material properties
-    boxShader->setVec3("material.ambient", vec3(1.0f, 0.5f, 0.31f));
-    boxShader->setVec3("material.diffuse", vec3(1.0f, 0.5f, 0.31f));
-    boxShader->setVec3("material.specular",
-                       vec3(0.5f, 0.5f, 0.5f)); // specular lighting doesn't have full effect on this object's material
+    boxShader->setVec3("light.specular", vec3(2.0f, 2.0f, 2.0f)); // material properties
+//    boxShader->setVec3("material.ambient", vec3(1.0f, 0.5f, 0.31f));
+//    boxShader->setVec3("material.diffuse", vec3(1.0f, 0.5f, 0.31f));
+//    boxShader->setVec3("material.specular", vec3(0.7f, 0.7f, 0.7f));
+      // specular lighting doesn't have full effect on this object's material
     boxShader->setFloat("material.shininess", 32.0f);
 
     glBindVertexArray(boxVAO);

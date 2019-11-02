@@ -33,6 +33,8 @@ source_group(common FILES ${COMMON_SRC} ${COMMON_HEADER})
 
 file(GLOB SHADER_FILES "./shaders/*")
 source_group(shaders FILES ${SHADER_FILES})
+file(GLOB TEXTURE_FILES "../resources/textures/*")
+source_group(textures FILES ${TEXTURE_FILES})
 
 add_executable(${PROJECT_NAME}
 	${MAIN_SRC}
@@ -40,8 +42,9 @@ add_executable(${PROJECT_NAME}
 	${HEADER}
 	${COMMON_HEADER}
 	${SHADER_FILES}
+	${TEXTURE_FILES}
 )
-set(BASE_RESOURCE ${SHADER_FILES})
+set(BASE_RESOURCE ${SHADER_FILES} ${TEXTURE_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	FOLDER "app"
 	MACOSX_BUNDLE TRUE
