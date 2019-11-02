@@ -48,7 +48,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	RESOURCE "${BASE_RESOURCE}"
 )
 
-target_link_libraries(${PROJECT_NAME} glfw glad)
+target_link_libraries(${PROJECT_NAME} glfw glad stb)
 
 find_package(OpenGL REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
