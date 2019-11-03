@@ -171,32 +171,32 @@ void LightingApp::CreateVertexArrayObject() {
        0.5f, -0.5f, -0.5f,
        0.5f, -0.5f,  0.5f,
   };
-    float normalDir[] = {
-         0.0f,  0.0f,  1.0f,
-         0.0f,  0.0f,  1.0f,
-         0.0f,  0.0f,  1.0f,
-         0.0f,  0.0f,  1.0f,
-         0.0f,  0.0f, -1.0f,
-         0.0f,  0.0f, -1.0f,
-         0.0f,  0.0f, -1.0f,
-         0.0f,  0.0f, -1.0f,
-        -1.0f,  0.0f,  0.0f,
-        -1.0f,  0.0f,  0.0f,
-        -1.0f,  0.0f,  0.0f,
-        -1.0f,  0.0f,  0.0f,
-         1.0f,  0.0f,  0.0f,
-         1.0f,  0.0f,  0.0f,
-         1.0f,  0.0f,  0.0f,
-         1.0f,  0.0f,  0.0f,
-         0.0f,  1.0f,  0.0f,
-         0.0f,  1.0f,  0.0f,
-         0.0f,  1.0f,  0.0f,
-         0.0f,  1.0f,  0.0f,
-         0.0f, -1.0f,  0.0f,
-         0.0f, -1.0f,  0.0f,
-         0.0f, -1.0f,  0.0f,
-         0.0f, -1.0f,  0.0f,
-    };
+  float normalDir[] = {
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f,  1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+       0.0f,  0.0f, -1.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+      -1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       1.0f,  0.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f,  1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+       0.0f, -1.0f,  0.0f,
+  };
   float texCoord[] = {
       0.0f, 0.0f, // In OpenGL: front
       1.0f, 0.0f, // In Unity : back
@@ -365,6 +365,10 @@ void LightingApp::RenderLoop() {
     boxShader->setFloat("light.constant", 1.0f);
     boxShader->setFloat("light.linear", 0.09f);
     boxShader->setFloat("light.quadratic", 0.032f);
+    boxShader->setVec3("light.position", camera->Position);
+    boxShader->setVec3("light.direction", camera->Front);
+    boxShader->setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+    boxShader->setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
     boxShader->setVec3("viewPos", camera->Position);
     // light properties
