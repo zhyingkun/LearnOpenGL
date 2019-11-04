@@ -305,7 +305,12 @@ void LightingApp::RenderLoop() {
       glm::vec3(1.5f, 0.2f, -1.5f),
       glm::vec3(-1.3f, 1.0f, -1.5f),
   };
-
+  glm::vec3 pointLightPositions[] = {
+      glm::vec3(0.7f, 0.2f, 2.0f),
+      glm::vec3(2.3f, -3.3f, -4.0f),
+      glm::vec3(-4.0f, 2.0f, -12.0f),
+      glm::vec3(0.0f, 0.0f, -3.0f),
+  };
   // render loop
   // -----------
   while (!glfwWindowShouldClose(this->mainWin)) {
@@ -360,28 +365,77 @@ void LightingApp::RenderLoop() {
     // glm::mat4 view = camera->GetViewMatrix();
     boxShader->setMat4("view", view);
 
-    boxShader->setVec3("light.position", lightPosition);
+    // boxShader->setVec3("light.position", lightPosition);
     // boxShader->setVec3("light.direction", vec3(-0.2f, -1.0f, -0.3f));
-    boxShader->setFloat("light.constant", 1.0f);
-    boxShader->setFloat("light.linear", 0.09f);
-    boxShader->setFloat("light.quadratic", 0.032f);
-    boxShader->setVec3("light.position", camera->Position);
-    boxShader->setVec3("light.direction", camera->Front);
-    boxShader->setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-    boxShader->setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+    // boxShader->setFloat("light.constant", 1.0f);
+    // boxShader->setFloat("light.linear", 0.09f);
+    // boxShader->setFloat("light.quadratic", 0.032f);
+    // boxShader->setVec3("light.position", camera->Position);
+    // boxShader->setVec3("light.direction", camera->Front);
+    // boxShader->setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+    // boxShader->setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
     boxShader->setVec3("viewPos", camera->Position);
     // light properties
-    vec3 diffuseColor = lightColor * vec3(0.8f); // decrease the influence
-    vec3 ambientColor = diffuseColor * vec3(0.5f); // low influence
-    boxShader->setVec3("light.ambient", ambientColor);
-    boxShader->setVec3("light.diffuse", diffuseColor);
-    boxShader->setVec3("light.specular", vec3(2.0f, 2.0f, 2.0f)); // material properties
+    // vec3 diffuseColor = lightColor * vec3(0.8f); // decrease the influence
+    // vec3 ambientColor = diffuseColor * vec3(0.5f); // low influence
+    // boxShader->setVec3("light.ambient", ambientColor);
+    // boxShader->setVec3("light.diffuse", diffuseColor);
+    // boxShader->setVec3("light.specular", vec3(2.0f, 2.0f, 2.0f)); // material properties
     // boxShader->setVec3("material.ambient", vec3(1.0f, 0.5f, 0.31f));
     // boxShader->setVec3("material.diffuse", vec3(1.0f, 0.5f, 0.31f));
     // boxShader->setVec3("material.specular", vec3(0.7f, 0.7f, 0.7f));
     // specular lighting doesn't have full effect on this object's material
     boxShader->setFloat("material.shininess", 32.0f);
+
+    // directional light
+    boxShader->setVec3("dirLight.direction", vec3(-0.2f, -1.0f, -0.3f));
+    boxShader->setVec3("dirLight.ambient", vec3(0.05f, 0.05f, 0.05f));
+    boxShader->setVec3("dirLight.diffuse", vec3(0.4f, 0.4f, 0.4f));
+    boxShader->setVec3("dirLight.specular", vec3(0.5f, 0.5f, 0.5f));
+    // point light 1
+    boxShader->setVec3("pointLights[0].position", pointLightPositions[0]);
+    boxShader->setVec3("pointLights[0].ambient", vec3(0.05f, 0.05f, 0.05f));
+    boxShader->setVec3("pointLights[0].diffuse", vec3(0.8f, 0.8f, 0.8f));
+    boxShader->setVec3("pointLights[0].specular", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setFloat("pointLights[0].constant", 1.0f);
+    boxShader->setFloat("pointLights[0].linear", 0.09);
+    boxShader->setFloat("pointLights[0].quadratic", 0.032);
+    // point light 2
+    boxShader->setVec3("pointLights[1].position", pointLightPositions[1]);
+    boxShader->setVec3("pointLights[1].ambient", vec3(0.05f, 0.05f, 0.05f));
+    boxShader->setVec3("pointLights[1].diffuse", vec3(0.8f, 0.8f, 0.8f));
+    boxShader->setVec3("pointLights[1].specular", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setFloat("pointLights[1].constant", 1.0f);
+    boxShader->setFloat("pointLights[1].linear", 0.09);
+    boxShader->setFloat("pointLights[1].quadratic", 0.032);
+    // point light 3
+    boxShader->setVec3("pointLights[2].position", pointLightPositions[2]);
+    boxShader->setVec3("pointLights[2].ambient", vec3(0.05f, 0.05f, 0.05f));
+    boxShader->setVec3("pointLights[2].diffuse", vec3(0.8f, 0.8f, 0.8f));
+    boxShader->setVec3("pointLights[2].specular", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setFloat("pointLights[2].constant", 1.0f);
+    boxShader->setFloat("pointLights[2].linear", 0.09);
+    boxShader->setFloat("pointLights[2].quadratic", 0.032);
+    // point light 4
+    boxShader->setVec3("pointLights[3].position", pointLightPositions[3]);
+    boxShader->setVec3("pointLights[3].ambient", vec3(0.05f, 0.05f, 0.05f));
+    boxShader->setVec3("pointLights[3].diffuse", vec3(0.8f, 0.8f, 0.8f));
+    boxShader->setVec3("pointLights[3].specular", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setFloat("pointLights[3].constant", 1.0f);
+    boxShader->setFloat("pointLights[3].linear", 0.09);
+    boxShader->setFloat("pointLights[3].quadratic", 0.032);
+    // spotLight
+    boxShader->setVec3("spotLight.position", camera->Position);
+    boxShader->setVec3("spotLight.direction", camera->Front);
+    boxShader->setVec3("spotLight.ambient", vec3(0.0f, 0.0f, 0.0f));
+    boxShader->setVec3("spotLight.diffuse", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setVec3("spotLight.specular", vec3(1.0f, 1.0f, 1.0f));
+    boxShader->setFloat("spotLight.constant", 1.0f);
+    boxShader->setFloat("spotLight.linear", 0.09);
+    boxShader->setFloat("spotLight.quadratic", 0.032);
+    boxShader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    boxShader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
     glBindVertexArray(boxVAO);
     for (unsigned int i = 0; i < 10; i++) {
