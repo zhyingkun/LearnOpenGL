@@ -53,24 +53,27 @@ cmake -G "Visual Studio 15 2017 Win64" ..
 
 ## 文件夹说明
 
-1. app 文件夹：用于存放所有 Demo，包括代码和资源
+1. app：用于存放所有 OpenGL 应用，包括代码和资源
 
    - common：所有 Demo 都会用到的公共代码
    - resources：Demo 用到的资源，包括贴图、模型等
-   - matrix-calculator：通过 glm 计算矩阵
    - template：模板示例代码
-   - glfw-win：最简单的创建一个窗口
    - base：基本教程内容
    - lighting：光照模拟
    - assimp：Assert Import，模型导入
 
-2. libs：整个工程用到的开源库
+2. demo：基础的示例工程
+
+   - glfw-win：最简单的创建一个窗口
+   - matrix-calculator：通过 glm 计算矩阵
+
+3. libs：整个工程用到的开源库
 
    - glfw：代码来自[https://github.com/glfw/glfw]
    - glad：代码来自[https://github.com/Dav1dde/glad]
    - glm：代码来自[https://github.com/g-truc/glm]
    - stb：代码来自[https://github.com/nothings/stb]
 
-3. SimulateOpenGL：这是一个 Unity2017 工程，用于说明 Unity 的渲染流程类似 OpenGL（针对 app 文件夹中的所有 Demo，都对应 Unity 中的一个场景，力图做到类似的输入数据得到类似的结果！）
+4. SimulateOpenGL：这是一个 Unity2017 工程，用于说明 Unity 的渲染流程类似 OpenGL（针对 app 文件夹中的所有应用，都对应 Unity 中的一个场景，力图做到类似的输入数据得到类似的结果！）
 
-4. 本工程所有 CMakeLists.txt 文件：用于管理整个工程的构建过程
+5. 所有 CMakeLists.txt 文件：用于管理整个工程的构建过程
