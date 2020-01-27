@@ -19,3 +19,4 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FLASE)
 
 add_subdirectory(./libs)
 add_subdirectory(./app)
+add_subdirectory(./demo)

@@ -31,7 +31,7 @@ source_group(src FILES ${MAIN_SRC})
 
 add_executable(${PROJECT_NAME} ${MAIN_SRC})
 set_target_properties(${PROJECT_NAME} PROPERTIES
-	FOLDER "app"
+	FOLDER "demo"
 	MACOSX_BUNDLE TRUE
 )
 target_link_libraries(${PROJECT_NAME} glfw glad)
