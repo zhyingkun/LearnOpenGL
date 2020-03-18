@@ -13,4 +13,4 @@ include_directories(../libs/stb/include)
 message(STATUS "CMakeLists.txt for ${PROJECT_NAME}")
 
 add_subdirectory(glfw-win)
-add_subdirectory(martix-calculator)
+add_subdirectory(matrix-calculator)
