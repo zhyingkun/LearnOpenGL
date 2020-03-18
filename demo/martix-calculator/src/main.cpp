@@ -35,33 +35,38 @@ void displayVec3(glm::vec3 vector) {
 int main(int argc, char* argv[]) {
   (void)argc;
   (void)argv;
-  cout << "Start martix calculate..." << endl;
+  cout << "Start matrix calculate..." << endl;
   // cout.setf(ios::fixed);
   cout.flags(ios::right);
 
-  glm::mat4 trans = glm::mat4(1.0f);
-  displayMat4(trans);
-  trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
-  displayMat4(trans);
-  glm::vec4 point = glm::vec4(1, 1, 0, 1);
-  displayVec4(point);
-  displayVec4(trans * point);
+  // glm::mat4 trans = glm::mat4(1.0f);
+  // displayMat4(trans);
+  // trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
+  // displayMat4(trans);
+  // glm::vec4 point = glm::vec4(1, 1, 0, 1);
+  // displayVec4(point);
+  // displayVec4(trans * point);
 
   // float width = 800.0;
   // float height = 800.0;
-  // glm::mat4 zhengshetouying = glm::ortho(0.0f, width, 0.0f, height, 10.0f, 20.0f);
-  // displayMartix(zhengshetouying);
-  // glm::vec4 point1 = glm::vec4(600, 600, -15, 1);
-  // // displayVec4(point1);
+  // glm::mat4 zhengshetouying = glm::ortho(-0.0414214f, 0.0414214f, -0.0414214f, 0.0414214f, 0.1f, 50.0f);
+  // displayMat4(zhengshetouying);
+  // glm::vec4 point1 = glm::vec4(0.0414214, 0.0414214, -50, 1);
+  // displayVec4(point1);
+  // displayVec4(zhengshetouying * point1);
+  // point1 = glm::vec4(0.0414214, 0.0414214, -0.1, 1);
   // displayVec4(zhengshetouying * point1);
 
   // glm::vec4 point2 = glm::vec4(810, 600, -10, 1);
   // // displayVec4(point1);
   // displayVec4(zhengshetouying * point2);
 
-  // glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)width / (float)height, 10.0f, 20.0f);
+  // glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
   // displayMat4(proj);
-  // displayVec4(proj * zhengshetouying * point1);
+  // glm::vec4 point1 = glm::vec4(20.7107, 20.7107, -50, 1);
+  // displayVec4(proj * point1);
+  // point1 = glm::vec4(0.0414214, 0.0414214, -0.1, 1);
+  // displayVec4(proj * point1);
 
   // glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
   // glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
