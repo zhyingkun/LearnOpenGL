@@ -1,3 +1,5 @@
+#if 0
+
 #include <model.h>
 
 Model::Model(string const& path, bool gamma = false) : gammaCorrection(gamma) {
@@ -189,3 +191,5 @@ static unsigned int TextureFromFile(const char* path, const string& directory, b
 
   return textureID;
 }
+
+#endif
